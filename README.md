@@ -14,6 +14,6 @@ To install from anaconda start here: https://docs.continuum.io/anaconda/install#
 
 Once Anaconda is installed then run the following command to install OpenCV: `conda install -c menpo opencv=2.4.11`
 
-Finally on the command line run: python -c "import cv2"
+Finally on the command line run: `python -c "import cv2"`
 
 If no errors everything should be installed.
