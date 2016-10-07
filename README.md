@@ -24,6 +24,7 @@ The first step to running the server is installing the node_modules. This can be
 
 ```bash
 npm install
+npm install webpack -g
 ```
 The next steps would simply be to bundle the javascript and deploy.
 
