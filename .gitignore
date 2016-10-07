@@ -44,4 +44,5 @@ babel_cache
 *.tgz
 
 # Compiled js files
-bundle.js
+dist
+

@@ -4,9 +4,9 @@ The idea is that every possible image is represented by some unique number.
 
 
 
-#Dependancies
+## Requirements
 
-##OpenCV
+### OpenCV
 We will use Anaconda to manage installing python dependancies.
 
 [install anaconda here](https://docs.continuum.io/anaconda/install#linux-install)
@@ -19,23 +19,38 @@ python -c "import cv2"
 ```
 
 
-#Running the server
-The first step to running the server is installing the node_modules. This can be done by running an
-
+## Running the app
 ```bash
 npm install
 npm install webpack -g
+npm start
 ```
-The next steps would simply be to bundle the javascript and deploy.
-
+To run the distribution server
 ```bash
-#Bundling the javascript files
-NODE_ENV=production node_modules/.bin/webpack -p
-#Deploying the webserver
-NODE_ENV=production node_modules/.bin/babel-node --presets 'react,es2015' src/server.js
+npm run-script dist
+
 ```
 
-#File structure
+## File structure
+### Client
+holds all the files and configuration pertaining the front-end.
+- `index.js` is react's entry point
+- `assets/` will hold images and sass files
+- `app/` will hold all the components of our app, organization is TBD
+
+
+### Server
+will hold all files needed to run the server and image generation.
+
+### Root
+- `.babelrc` config for [babel](https://babeljs.io/), our jsx & es6 transpiler
+- `.editorconfig` has suggestions for how we write code. Best practice to connect your [editor](http://editorconfig.org/#download).
+- `.eslintrc.js` coding style guide for your [editor](http://eslint.org/docs/user-guide/integrations)
+- `webpack.config.js` builds the project with different configuration for dev & prod
+- `package.json` holds all our dependancies as well as our top-level scripts
+- `webpack.paths.js` paths used by `webpack.config.js`
+
+
 
 ##Outside the SRC
 The first file to see is the webpack.config.js. This file deals with packaging the javascript files into one bundle.
