@@ -8,9 +8,9 @@ class App extends React.Component {
             <div>
               <h1>Hello World</h1>
 
-              <a href="/#/generate">Visit the generate page</a>
+              <Link to="/#/generate">Visit the generate page</Link>
               <br></br>
-              <a href="/#/upload">Visit the Upload page</a>
+              <Link to="/#/upload">Visit the Upload page</Link>
             </div>
           );
   }
