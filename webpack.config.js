@@ -1,10 +1,9 @@
-'use strict'
-
-const webpack = require('webpack'),
-  conf = require('./webpack.paths.js'),
-  HtmlWebpackPlugin = require('html-webpack-plugin'),
-  CleanWebpackPlugin = require('clean-webpack-plugin'),
-  isProd = (process.env.NODE_ENV == 'production')
+const webpack = require('webpack')
+  , conf = require('./webpack.paths.js')
+  , HtmlWebpackPlugin = require('html-webpack-plugin')
+  , CleanWebpackPlugin = require('clean-webpack-plugin')
+  , LiveReloadPlugin = require('webpack-livereload-plugin')
+  , isProd = (process.env.NODE_ENV == 'production')
 
 var commonLoaders = [
   { test: /\.jsx?$/, loader: 'babel' }
@@ -47,13 +46,18 @@ function getClientPlugins() {
       template: conf.client.template,
       filename: 'index.html',
       inject: 'body',
-      livereload: !isProd ? '<script src="http://localhost:35729/livereload.js"></script>' : null
+      //livereload: !isProd ? '<script src="http://localhost:35729/livereload.js"></script>' : null
     })
   ].concat(plugins)
 
   if (isProd) {
     plugins = [
       //new CleanWebpackPlugin([conf.distClient]),
+      new LiveReloadPlugin()
+    ].concat(plugins)
+  } else {
+    plugins = [
+      new webpack.HotModuleReplacementPlugin()
     ].concat(plugins)
   }
   return plugins
@@ -82,6 +86,7 @@ function getOutput(setPath) {
   }
   if (isProd && setPath.includes('client')) {
     output.filename = 'app.[chunkhash].js'
+    output.publicPath = '/'
   }
   return output
 }
@@ -90,7 +95,9 @@ module.exports = [
   {
     name: 'browser',
     devtool: getDevTool(),
-    entry: conf.client.entry,
+    entry: [
+      conf.client.entry
+    ],
     output: getOutput(conf.distClient),
     module: {
       loaders: commonLoaders

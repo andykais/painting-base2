@@ -6,7 +6,7 @@ const serverPath  = 'server'
 
 var paths = {
   client: {
-    entry: `${clientPath}/index.js`,
+    entry: `${clientPath}/index.jsx`,
     template: `${clientPath}/index.html`,
     assets: `${clientPath}/assets/**/*`,
     images: `${clientPath}/assets/images/**/*`,

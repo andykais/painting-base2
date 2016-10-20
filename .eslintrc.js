@@ -4,6 +4,13 @@ module.exports = {
     "es6": true,
     "node": true
   },
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
   "rules": {
     "strict": [2, "global"],
     "no-multi-spaces": 0,
