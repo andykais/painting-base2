@@ -19,10 +19,13 @@ var paths = {
     mainView: `${clientPath}/index.html`
   },
   server: {
+    entry: `${serverPath}/index.js`,
     scripts: [`${serverPath}/**/*.js`],
     json: [`${serverPath}/**/*.json`],
   },
-  dist: 'dist',
+  dist: `dist`,
+  distClient: `dist/${clientPath}`,
+  distServer: `dist/${serverPath}`,
   tmp: 'tmp'
 }
 
