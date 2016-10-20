@@ -15,6 +15,7 @@ var compiler = webpack(configClient)
 var server = new WebpackDevServer(compiler, {
   inline: true,
   hot: true,
+  historyApiFallback: true,
   stats: {
     version: false,
     chunks: false,

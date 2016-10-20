@@ -45,8 +45,7 @@ function getClientPlugins() {
     new HtmlWebpackPlugin({
       template: conf.client.template,
       filename: 'index.html',
-      inject: 'body',
-      //livereload: !isProd ? '<script src="http://localhost:35729/livereload.js"></script>' : null
+      inject: 'body'
     })
   ].concat(plugins)
 
