@@ -1,5 +1,7 @@
 var webpack = require('webpack')
   , WebpackDevServer = require('webpack-dev-server')
+  , nodemon = require('nodemon')
+  , path = require('path')
   , gutil = require('gutil')
   , configClient = require('./webpack.config')[0]
   , configServer = require('./webpack.config')[1]
@@ -28,6 +30,7 @@ server.listen(8080, function (err) {
   console.log('webpack dev server listening on http://localhost:8080\n')
 })
 
+var nodemonStarted = false
 // run webpack on server
 webpack(configServer).watch({
   stats: {chunks: true}
@@ -39,5 +42,13 @@ webpack(configServer).watch({
     version: false,
     colors: true
   }))
-  console.log('use nodemon, restart api server.')
+  if (!nodemonStarted) {
+    console.log('nodemon api server started.')
+    nodemon({
+      script: path.join(configServer.output.path, configServer.output.filename),
+      watch: configServer.output.path
+    })
+    nodemonStarted = true
+  }
 })
+
