@@ -2,16 +2,14 @@ const webpack = require('webpack')
   , conf = require('./webpack.paths.js')
   , HtmlWebpackPlugin = require('html-webpack-plugin')
   , CleanWebpackPlugin = require('clean-webpack-plugin')
+  , ExtractTextPlugin = require('extract-text-webpack-plugin')
   , LiveReloadPlugin = require('webpack-livereload-plugin')
   , isProd = (process.env.NODE_ENV == 'production')
 
 var commonLoaders = [
-  { test: /\.jsx?$/, loader: 'babel' }
+  { test: /\.jsx?$/, loader: 'babel' },
 ]
 
-function getDevTool() {
-  return !isProd ? 'source-map' : null
-}
 
 function getPlugins() {
   var plugins = []
@@ -21,8 +19,8 @@ function getPlugins() {
       new webpack.DefinePlugin({
         'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
       }),
-      new CleanWebpackPlugin([conf.dist]),
-      //new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.bundle.js'),
+      new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.bundle.js'),
+      new CleanWebpackPlugin([conf.distClient]),
       new webpack.optimize.DedupePlugin(),
       new webpack.optimize.OccurenceOrderPlugin(),
       new webpack.optimize.UglifyJsPlugin({
@@ -51,11 +49,13 @@ function getClientPlugins() {
 
   if (isProd) {
     plugins = [
-      //new CleanWebpackPlugin([conf.distClient]),
-      new LiveReloadPlugin()
+      new ExtractTextPlugin('app.[chunkhash].css'),
+      new LiveReloadPlugin(),
+      new CleanWebpackPlugin([conf.distClient]),
     ].concat(plugins)
   } else {
     plugins = [
+      new ExtractTextPlugin('app.css'),
       new webpack.HotModuleReplacementPlugin()
     ].concat(plugins)
   }
@@ -66,7 +66,7 @@ function getServerPlugins() {
   var plugins = getPlugins()
   if (isProd) {
     plugins = [
-      //new CleanWebpackPlugin([conf.distServer]),
+      new CleanWebpackPlugin([conf.distServer]),
     ].concat(plugins)
   } else {
     plugins = [
@@ -93,18 +93,30 @@ function getOutput(setPath) {
 module.exports = [
   {
     name: 'browser',
-    devtool: getDevTool(),
+    devtool: !isProd ? 'source-map' : null,
     entry: [
       conf.client.entry
     ],
     output: getOutput(conf.distClient),
     module: {
-      loaders: commonLoaders
+      loaders: [{
+        test: /\.scss$/,
+        exclude: /node_modules/,
+        loader: ExtractTextPlugin.extract('style-loader', 'css-loader!postcss-loader')
+      }].concat(commonLoaders)
+    },
+    postcss: function(webpack) {
+      return [
+        require('postcss-smart-import')({ addDependencyTo: webpack }),
+        require('postcss-cssnext')(),
+        require('postcss-nested')(),
+      ]
     },
     plugins: getClientPlugins()
-  }, {
+  }
+  , {
     name: 'server side compile',
-    devtool: getDevTool(),
+    devtool: !isProd ? 'source-map' : null,
     entry: conf.server.entry,
     output: getOutput(conf.distServer),
     target: 'node',

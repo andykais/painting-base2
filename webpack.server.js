@@ -3,6 +3,7 @@ var webpack = require('webpack')
   , nodemon = require('nodemon')
   , path = require('path')
   , gutil = require('gutil')
+  , postcss = require('postcss-scss')
   , configClient = require('./webpack.config')[0]
   , configServer = require('./webpack.config')[1]
 
