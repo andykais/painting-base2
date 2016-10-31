@@ -12,7 +12,9 @@ class IndexPage extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {status: statics.none};
+    this.state = {status: statics.none, width: 400, height: 400};
+    this._handleWidthChange = this._handleWidthChange.bind(this);
+    this._handleHeightChange = this._handleHeightChange.bind(this);
   }
 
   /**
@@ -34,21 +36,46 @@ class IndexPage extends React.Component {
     this.setState({status:mode});
   }
 
+  /**
+    Handler to update the width of a random image
+  */
+  _handleWidthChange(event) {
+    this.setState({width: event.target.value});
+  }
+
+  /**
+    Handler to update the height of a random image
+  */
+  _handleHeightChange(event) {
+    this.setState({height: event.target.value});
+  }
+
   render() {
     //Base state is asking user to pick a mode
     let $imageShow = (<div>Please Choose a state</div>);
-
+    //Location of code for user to pick height and width of genrated image
+    let $generateParams = (<div>
+                            <div> Width </div>
+                            <input type="number"
+                              value={this.state.width}
+                              onChange={this._handleWidthChange} />
+                            <div> Height </div>
+                            <input type="number"
+                              value={this.state.height}
+                              onChange={this._handleHeightChange} />
+                          </div>)
     if(this.state.status === statics.uploaded) {
       $imageShow = (<ImageUpload ref="uploaded"/>)
     }
     else if(this.state.status === statics.generated) {
-      $imageShow = (<Generate ref="generated"/>)
+      $imageShow = (<Generate height={this.state.height} width={this.state.width} ref="generated"/>)
     }
 
     return(
       <div id="indexMain">
         <h1>Welcome to Our App!</h1>
         <button className="uploadMode" type="submit" onClick={()=>this._setImageMode(statics.uploaded)}>Upload Your Own Image</button>
+        {$generateParams}
         <button className="generateMode" type="submit" onClick={()=>this._setImageMode(statics.generated)}>Generate a Random Image</button>
         {$imageShow}
 
