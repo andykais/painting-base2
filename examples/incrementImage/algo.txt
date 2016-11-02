@@ -1,0 +1,8 @@
+input: image array, increment number
+output: image incremented by number
+
+Two options:
+1. convert image array to number, add increment, convert to array
+   easier
+2. convert number to array, add to image array
+   faster

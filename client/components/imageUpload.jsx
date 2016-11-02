@@ -1,15 +1,14 @@
 import React from 'react';
 
 class ImageUpload extends React.Component {
+
   constructor(props) {
     super(props);
-    this.state = {file: '',imagePreviewUrl: ''};
+    this.state = {file: '', imagePreviewUrl: ''};
   }
 
   _handleSubmit(e) {
     e.preventDefault();
-    // TODO: do something with -> this.state.file
-    console.log('handle uploading-', this.state.file);
   }
 
   _handleImageChange(e) {
@@ -17,6 +16,19 @@ class ImageUpload extends React.Component {
 
     let reader = new FileReader();
     let file = e.target.files[0];
+
+    let canvas = document.getElementById('canvas');
+    let ctx = canvas.getContext('2d');
+
+    reader.onload = function(event) {
+      var img = new Image();
+      img.onload = function() {
+        canvas.width = img.width;
+        canvas.height = img.height;
+        ctx.drawImage(img, 0, 0);
+      }
+      img.src = event.target.result;
+    }
 
     reader.onloadend = () => {
       this.setState({
@@ -30,12 +42,6 @@ class ImageUpload extends React.Component {
 
   render() {
     let {imagePreviewUrl} = this.state;
-    let $imagePreview = null;
-    if (imagePreviewUrl) {
-      $imagePreview = (<img src={imagePreviewUrl} />);
-    } else {
-      $imagePreview = (<div className="previewText">Please select an Image for Preview</div>);
-    }
 
     return (
       <div className="previewComponent">
@@ -43,9 +49,6 @@ class ImageUpload extends React.Component {
           <input className="fileInput" type="file" onChange={(e)=>this._handleImageChange(e)} />
           <button className="submitButton" type="submit" onClick={(e)=>this._handleSubmit(e)}>Upload Image</button>
         </form>
-        <div className="imgPreview">
-          {$imagePreview}
-        </div>
       </div>
     )
   }
