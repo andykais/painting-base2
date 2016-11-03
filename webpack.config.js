@@ -102,15 +102,8 @@ module.exports = [
       loaders: [{
         test: /\.scss$/,
         exclude: /node_modules/,
-        loader: ExtractTextPlugin.extract('style-loader', 'css-loader!postcss-loader')
+        loader: ExtractTextPlugin.extract('style-loader', 'css-loader!sass-loader')
       }].concat(commonLoaders)
-    },
-    postcss: function(webpack) {
-      return [
-        require('postcss-smart-import')({ addDependencyTo: webpack }),
-        require('postcss-cssnext')(),
-        require('postcss-nested')(),
-      ]
     },
     plugins: getClientPlugins()
   }

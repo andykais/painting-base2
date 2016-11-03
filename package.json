@@ -8,7 +8,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start:dist": "NODE_ENV=production; webpack --progress && node dist/server/app.js",
+    "start:dist": "export NODE_ENV=production; webpack --progress && node dist/server/app.js",
     "start": "node webpack.server.js"
   },
   "repository": {
@@ -43,13 +43,15 @@
     "extract-text-webpack-plugin": "^1.0.1",
     "gutil": "^1.6.4",
     "http-server": "~0.9.0",
+    "node-sass": "^3.11.0",
     "nodemon": "^1.11.0",
     "postcss-cssnext": "^2.8.0",
-    "postcss-loader": "^1.0.0",
+    "postcss-loader": "^1.1.0",
     "postcss-nested": "^1.0.0",
     "postcss-scss": "^0.3.1",
     "postcss-smart-import": "^0.4.3",
     "react-hot-loader": "^3.0.0-beta.6",
+    "sass-loader": "^4.0.2",
     "style-loader": "^0.13.1",
     "webpack": "^1.13.2",
     "webpack-dev-server": "^1.16.2",
