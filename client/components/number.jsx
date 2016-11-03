@@ -12,6 +12,7 @@ class Number extends React.Component {
     let carry = 0;
     for (let i = 0; i < canvasData.length; i += 4) {
         let n = (canvasData[i+2] << 16) + (canvasData[i+1] << 8) + canvasData[i] + carry;
+        carry = 0;
         if (n > 10000000) {
           carry = 1;
           n -= 10000000;
