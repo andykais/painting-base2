@@ -8,7 +8,7 @@ class Generate extends React.Component {
 
   /* iterate over canvas and set each pixel as random */
   generatePixels(canvas, ctx, canvasData) {
-    for (var i = 0; i < canvasData.data.length; i += 4) {
+    for (let i = 0; i < canvasData.data.length; i += 4) {
       canvasData.data[i] = Math.floor(Math.random() * 256);
       canvasData.data[i+1] = Math.floor(Math.random() * 256);
       canvasData.data[i+2] = Math.floor(Math.random() * 256);
