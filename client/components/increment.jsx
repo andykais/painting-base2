@@ -7,30 +7,47 @@ class Increment extends React.Component {
   }
 
   getIncrArray(incr) {
-    return [0]*incr.length;
+    incr = ('000000000000000000000000').slice(incr%24)+incr;
+    let incrArray = [];
+    while (incr != '') {
+      incrArray.push(parseInt(incr.slice(-8), 2));
+      incrArray.push(parseInt(incr.slice(-16,-8), 2));
+      incrArray.push(parseInt(incr.slice(-24,-16), 2));
+      incrArray.push(256);
+      incr = incr.slice(0,-24);
+    }
+    return incrArray;
   }
 
-  /* iterate over canvas and set each pixel as random */
-  incrementImage(canvas, ctx, incrData) {
-    /* to do: calculate increment start position */
-    let x = 100;
-    let y = 100;
-    let canvasData = ctx.getImageData(x, y, canvas.width, canvas.height);
-
-    for (var i = 0; i < canvasData.data.length; i += 4) {
-        canvasData.data[i] += incrData[i];
+  /* iterate over canvas and increment each pixel as needed */
+  incrementImage(ctx, canvasData, incrArray) {
+    for (var i = 0; i < incrArray.length; i++) {
+      let m = canvasData.data[i] + incrArray[i];
+      canvasData.data[i] = m%256;
+      if (m > 255) {
+        if (i%4 == 2) {
+          incrArray[i+2] += 1;
+        }
+        else {
+          incrArray[i+1] += 1;
+        }
+      }
+      if (i%4 == 2) {
+        i++;
+      }
     }
     /* set new pixels in canvas */
-    ctx.putImageData(canvasData, x, y);
+    ctx.putImageData(canvasData, 0, 0);
   }
 
   render() {
     /* get canvas data */
     let canvas = document.getElementById('canvas');
     let ctx = canvas.getContext('2d');
+    let canvasData = ctx.getImageData(0, 0, canvas.width, canvas.height);
 
-    let incrData = this.getIncrArray(2038159793284075190);
-    this.incrementImage(canvas, ctx, incrData);
+    /* increment image using array generated from input number */
+    this.incrementImage(ctx, canvasData, this.getIncrArray('10101101010101010100000000000111110101010010100011011110101010111001001010101010010110101010101010111111101000101110100101010010010010101101'));
     return(null);
   }
 }
