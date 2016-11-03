@@ -9,8 +9,14 @@ class Number extends React.Component {
   /* iterate over canvas and return file containing numerical representation */
   getNumberFile(canvasData) {
     let num = '';
+    let carry = 0;
     for (let i = 0; i < canvasData.length; i += 4) {
-        num += (canvasData[i] + (canvasData[i+1] << 8) + (canvasData[i+2] << 16)).toString(10);
+        let n = (canvasData[i+2] << 16) + (canvasData[i+1] << 8) + canvasData[i] + carry;
+        if (n > 10000000) {
+          carry = 1;
+          n -= 10000000;
+        }
+        num = n.toString(10) + num;
     }
     return new Blob([num], {type: 'text/plain'});
   }
