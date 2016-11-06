@@ -1,7 +1,7 @@
 import React from 'react';
 import ImageUpload from './imageUpload.jsx';
 import Generate from './generate.jsx';
-import Number from './number.jsx';
+import ImageNumber from './imageNumber.jsx';
 import Increment from './increment.jsx';
 
 const statics = {
@@ -49,7 +49,7 @@ class IndexPage extends React.Component {
       $imageShow = (<Generate ref="generated"/>)
     }
     else if(this.state.status === statics.number) {
-      $imageShow = (<Number ref="number"/>)
+      $imageShow = (<ImageNumber ref="number"/>)
     }
     else if(this.state.status === statics.increment) {
       $imageShow = (<Increment ref="increment"/>)

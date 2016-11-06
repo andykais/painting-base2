@@ -1,10 +1,6 @@
 import React from 'react';
 
-class Number extends React.Component {
-
-  constructor(props) {
-    super(props);
-  }
+class ImageNumber extends React.Component {
 
   /* iterate over canvas and return file containing numerical representation */
   getNumberFile(canvasData) {
@@ -28,12 +24,12 @@ class Number extends React.Component {
     let canvasData = canvas.getContext('2d').getImageData(0, 0, canvas.width, canvas.height).data;
 
     /* create file with image number */
-	let file = this.getNumberFile(canvasData);
+    let file = this.getNumberFile(canvasData);
 
-	/* redirect to number file */
+    /* redirect to number file */
     window.open(URL.createObjectURL(file));
     return(null);
   }
 }
 
-export default Number
+export default ImageNumber

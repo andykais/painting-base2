@@ -2,10 +2,6 @@ import React from 'react';
 
 class Generate extends React.Component {
 
-  constructor(props) {
-    super(props);
-  }
-
   /* iterate over canvas and set each pixel as random */
   generatePixels(canvas, ctx, canvasData) {
     for (let i = 0; i < canvasData.data.length; i += 4) {
@@ -29,4 +25,5 @@ class Generate extends React.Component {
     return(null);
   }
 }
+
 export default Generate

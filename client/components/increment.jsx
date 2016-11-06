@@ -2,16 +2,12 @@ import React from 'react';
 
 class Increment extends React.Component {
 
-  constructor(props) {
-    super(props);
-  }
-
   /* increment each pixel as needed */
   incrementImage(ctx, canvasData, incr) {
     for (let i = 0; incr > 0; i++) {
       let m = canvasData.data[i] + incr%256;
       canvasData.data[i] = m%256;
-      incr = Math.floor(incr/256);
+      incr >>>= 8;
       if (m > 255) {
         incr++;
       }
@@ -30,7 +26,7 @@ class Increment extends React.Component {
     let canvasData = ctx.getImageData(0, 0, canvas.width, canvas.height);
 
     /* increment image using array generated from input number */
-    this.incrementImage(ctx, canvasData, 256849583);
+    this.incrementImage(ctx, canvasData, num);
     return(null);
   }
 }
