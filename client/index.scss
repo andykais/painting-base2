@@ -1,4 +1,3 @@
-@import 'assets/styles/_mixins.scss';
 
 body {
   margin: 0;
@@ -9,3 +8,5 @@ body {
   }
 }
 
+@import 'assets/styles/_mixins.scss';
+@import 'assets/styles/layouts.scss';

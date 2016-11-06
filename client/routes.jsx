@@ -1,9 +1,9 @@
 import React from 'react';
 import { Router, Route, IndexRoute, Link, browserHistory} from 'react-router'
-import App from './components/app.jsx'
+import App from './containers/app.jsx'
 import Generate from './components/generate.jsx'
-import IndexPage from './components/indexPage.jsx'
-import NoMatch from './components/404NotFound.jsx'
+import IndexPage from './containers/indexPage.jsx'
+import NoMatch from './containers/404NotFound.jsx'
 import UploadImage from './components/imageUpload.jsx'
 
 
