@@ -1,18 +1,7 @@
 import React from 'react';
+import generatePixels from '../libs/transformations';
 
 class Generate extends React.Component {
-
-  /* iterate over canvas and set each pixel as random */
-  generatePixels(canvas, ctx, canvasData) {
-    for (let i = 0; i < canvasData.data.length; i += 4) {
-      canvasData.data[i] = Math.floor(Math.random() * 256);
-      canvasData.data[i+1] = Math.floor(Math.random() * 256);
-      canvasData.data[i+2] = Math.floor(Math.random() * 256);
-      canvasData.data[i+3] = 255;
-    }
-    /* set random pixels in canvas */
-    ctx.putImageData(canvasData, 0, 0);
-  }
 
   render() {
     /* get canvas data */
@@ -20,8 +9,9 @@ class Generate extends React.Component {
     let ctx = canvas.getContext('2d');
     let canvasData = ctx.getImageData(0, 0, canvas.width, canvas.height);
 
-    /* generate random pixels */
-    this.generatePixels(canvas, ctx, canvasData);
+    /* generate random pixels and set pixels in canvas */
+    generatePixels(canvasData.data);
+    ctx.putImageData(canvasData, 0, 0);
     return(null);
   }
 }
