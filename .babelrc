@@ -3,6 +3,11 @@
     "transform-react-jsx",
     "transform-strict-mode"
   ],
-  "presets": ["es2015"] ,
+  "presets": ["react", "es2015", "stage-2"] ,
+  "env": {
+      "development": {
+        "presets": ["react-hmre"]
+      }
+  },
   ignore: ["/node_modules/"]
 }
