@@ -1,7 +1,10 @@
 import React from 'react'
 
 const App = () => {
-  return ( 'Hello World' )
+  console.log('testing')
+  return ( 
+    <p>Hello World</p>  
+  )
 }
 
 export default App

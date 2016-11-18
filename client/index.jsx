@@ -1,5 +1,9 @@
-
 import 'babel-polyfill'
+
+//var System = {}
+//System.import = function(path) {
+  //return Promise.resolve(require(path))
+//}
 
 import React from 'react'
 import ReactDOM from 'react-dom'
@@ -28,6 +32,7 @@ const history = syncHistoryWithStore(browserHistory, store, {
 // Set up the router, wrapping all Routes in the App component
 import App from './containers/App/index.jsx'
 import createRoutes from './routes'
+
 const rootRoute = {
   component: App,
   childRoutes: createRoutes(store),

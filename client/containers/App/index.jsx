@@ -13,6 +13,7 @@ class App extends React.Component {
               <li><Link to='/upload'>Upload</Link></li>
             </ul>
           </header>
+          {"children below"}
           <div className='app-content'>{this.props.children}</div>
           <footer></footer>
         </div>

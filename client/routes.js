@@ -19,8 +19,10 @@ export default function createRoutes(store) {
       name: 'home',
       getComponent(nextState, cb) {
         const importModules = Promise.all([
-          System.import('containers/HomePage'),
+          System.import('./containers/HomePage/index.jsx'),
         ])
+
+        console.log('home page!')
 
         const renderRoute = loadModule(cb)
 
@@ -37,9 +39,11 @@ export default function createRoutes(store) {
       name: 'about',
       getComponent(nextState, cb) {
         const importModules = Promise.all([
-          System.import('containers/AboutPage'),
+          System.import('./containers/AboutPage/index.jsx'),
 
         ])
+
+        console.log('about page!')
 
         const renderRoute = loadModule(cb)
 
@@ -55,7 +59,7 @@ export default function createRoutes(store) {
       path: '*',
       name: 'notfound',
       getComponent(nextState, cb) {
-        System.import('containers/NotFoundPage')
+        System.import('./containers/NotFoundPage/index.jsx')
           .then(loadModule(cb))
           .catch(errorLoading)
       },
