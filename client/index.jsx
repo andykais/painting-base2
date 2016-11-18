@@ -1,12 +1,8 @@
 import 'babel-polyfill'
 
-//var System = {}
-//System.import = function(path) {
-  //return Promise.resolve(require(path))
-//}
-
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { Provider } from 'react-redux'
 import { applyRouterMiddleware, Router, browserHistory } from 'react-router'
 import { syncHistoryWithStore } from 'react-router-redux';
 import useScroll from 'react-router-scroll'
@@ -38,19 +34,18 @@ const rootRoute = {
   childRoutes: createRoutes(store),
 }
 
-const render = (translatedMessages) => {
+const render = () => {
   ReactDOM.render(
     <Provider store={store}>
       <Router
         history={browserHistory}
         routes={rootRoute}
-        render={
-          // Scroll to top when going to a new page, imitating default browser
-          // behaviour
-          applyRouterMiddleware(useScroll())
-        }
+        onUpdate={() => window.scrollTo(0, 0)}
       />
-  </Provider>,
-    document.getElementById('app')
+    </Provider>,
+    document.getElementById('root')
   )
+}
+window.onload = () => {
+  render()
 }
