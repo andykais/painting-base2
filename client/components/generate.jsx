@@ -1,5 +1,5 @@
 import React from 'react';
-import generatePixels from '../libs/transformations';
+import {generatePixels} from '../libs/transformations';
 
 class Generate extends React.Component {
 

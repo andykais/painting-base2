@@ -63,8 +63,6 @@ class IndexPage extends React.Component {
         <button className="numberMode" type="submit" onClick={()=>this._setImageMode(statics.number)}>See the Number for your Image</button>
         <button className="numberMode" type="submit" onClick={()=>this._setImageMode(statics.increment)}>Increment your Image</button>
         {$imageShow}
-
-        <button className="submitButton" type="submit" onClick={(e)=>this._handleButtonPress(e)}>Log Some Data</button>
       </div>
     )
   }
