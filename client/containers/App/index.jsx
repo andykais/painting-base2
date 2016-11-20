@@ -10,7 +10,7 @@ class App extends React.Component {
             <ul>
               <li><Link to='/'>Home</Link></li>
               <li><Link to='/generate'>Generate</Link></li>
-              <li><Link to='/upload'>Upload</Link></li>
+              <li><Link to='/about'>About</Link></li>
             </ul>
           </header>
           <div className='app-content'>{this.props.children}</div>

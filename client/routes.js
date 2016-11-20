@@ -19,10 +19,28 @@ export default function createRoutes(store) {
       name: 'home',
       getComponent(nextState, cb) {
         const importModules = Promise.all([
+          System.import('./containers/HomePage/reducer'),
           System.import('./containers/HomePage/index.jsx'),
         ])
 
-        console.log('home page!')
+        const renderRoute = loadModule(cb)
+
+        importModules.then(([reducer, component]) => {
+          injectReducer('homePage', reducer.default)
+          renderRoute(component)
+
+        })
+
+        importModules.catch(errorLoading)
+      },
+    },
+    {
+      path: '/generate',
+      name: 'generate',
+      getComponent(nextState, cb) {
+        const importModules = Promise.all([
+          System.import('./containers/GeneratePage/index.jsx'),
+        ])
 
         const renderRoute = loadModule(cb)
 
@@ -42,8 +60,6 @@ export default function createRoutes(store) {
           System.import('./containers/AboutPage/index.jsx'),
 
         ])
-
-        console.log('about page!')
 
         const renderRoute = loadModule(cb)
 
