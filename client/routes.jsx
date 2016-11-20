@@ -5,6 +5,7 @@ import Generate from './components/generate.jsx'
 import IndexPage from './components/indexPage.jsx'
 import NoMatch from './components/404NotFound.jsx'
 import UploadImage from './components/imageUpload.jsx'
+import InfoPage from './components/infoPage.jsx'
 
 
 export default class AppRoutes extends React.Component {
@@ -15,6 +16,7 @@ export default class AppRoutes extends React.Component {
           <IndexRoute component={IndexPage}/>
           <Route path='generate' component={Generate}/>
           <Route path='upload' component={UploadImage}/>
+          <Route path='learnMore' component={InfoPage}/>
           <Route path='*' component={NoMatch}/>
         </Route>
       </Router>
