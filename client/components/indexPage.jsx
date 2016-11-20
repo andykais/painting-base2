@@ -1,14 +1,10 @@
 import React from 'react';
 import ImageUpload from './imageUpload.jsx';
 import Generate from './generate.jsx';
-import Number from './number.jsx';
-import Increment from './increment.jsx';
 
 const statics = {
     uploaded: 'u',
     generated: 'g',
-    number: 'm',
-    increment: 'i',
     none: 'n'
 }
 
@@ -25,9 +21,9 @@ class IndexPage extends React.Component {
   _handleButtonPress(e) {
     e.preventDefault();
     // TODO: do something more than print
-    // To access the state of generate it would be
-    // this.refs.generated.state
-    console.log(this.state.status);
+    //To access the state of generate it would be
+        //this.refs.generated.state
+    console.log(this.refs.uploaded.state);
   }
 
   /**
@@ -39,8 +35,8 @@ class IndexPage extends React.Component {
   }
 
   render() {
-    // Base state is asking user to pick a mode
-    let $imageShow = (null);
+    //Base state is asking user to pick a mode
+    let $imageShow = (<div>Please Choose a state</div>);
 
     if(this.state.status === statics.uploaded) {
       $imageShow = (<ImageUpload ref="uploaded"/>)
@@ -48,20 +44,12 @@ class IndexPage extends React.Component {
     else if(this.state.status === statics.generated) {
       $imageShow = (<Generate ref="generated"/>)
     }
-    else if(this.state.status === statics.number) {
-      $imageShow = (<Number ref="number"/>)
-    }
-    else if(this.state.status === statics.increment) {
-      $imageShow = (<Increment ref="increment"/>)
-    }
 
     return(
       <div id="indexMain">
         <h1>Welcome to Our App!</h1>
         <button className="uploadMode" type="submit" onClick={()=>this._setImageMode(statics.uploaded)}>Upload Your Own Image</button>
         <button className="generateMode" type="submit" onClick={()=>this._setImageMode(statics.generated)}>Generate a Random Image</button>
-        <button className="numberMode" type="submit" onClick={()=>this._setImageMode(statics.number)}>See the Number for your Image</button>
-        <button className="numberMode" type="submit" onClick={()=>this._setImageMode(statics.increment)}>Increment your Image</button>
         {$imageShow}
 
         <button className="submitButton" type="submit" onClick={(e)=>this._handleButtonPress(e)}>Log Some Data</button>
@@ -69,5 +57,4 @@ class IndexPage extends React.Component {
     )
   }
 }
-
 export default IndexPage
