@@ -1,18 +1,18 @@
 import { createSelector } from 'reselect'
 
-/**
- * Direct selector to the homepage state domain (specified in ~/routes.js)
- */
+  /**
+   * Direct selector to the homepage state domain (specified in ~/routes.js)
+   */
 const selectHomePageDomain = () => state => state.get('homePage')
 
-/**
- * Other specific selectors
- */
+  /**
+   * Other specific selectors
+   */
 
 
-/**
- * Default selector used by HomePage
- */
+  /**
+   * Default selector used by HomePage
+   */
 
 const selectHomePage = () => createSelector(
   selectHomePageDomain(),

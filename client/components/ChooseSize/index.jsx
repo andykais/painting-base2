@@ -19,7 +19,7 @@ const ChooseSize = (props) => {
         })
       }/>
     <button>
-      <Link to={ {pathname: 'generate', query: {width: props.width, height: props.height}} }>Generate the image</Link>
+      {props.children}
     </button>
   </div>
   )

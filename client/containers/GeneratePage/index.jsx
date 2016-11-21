@@ -1,9 +1,25 @@
 import React from 'react'
+import {connect} from 'react-redux'
 
-const Generate = ({location: { query }}) => ( 
-  <p> image generation goes here. Size {query.width * query.height} </p>
- )
+import { setFirstResolution } from './actions'
+import selectGeneratePage from './selectors'
 
-Generate.propTypes = {}
 
-export default Generate
+const Generate = (props) => {
+  const width = props.width
+  const height = props.height
+
+  return (
+    <p> image generation goes here. Size {width * height} </p>
+  )
+}
+
+const mapStateToProps = selectGeneratePage()
+
+function mapDispatchToProps(dispatch) {
+  return {
+    dispatch,
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Generate)

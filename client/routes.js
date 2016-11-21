@@ -39,12 +39,14 @@ export default function createRoutes(store) {
       name: 'generate',
       getComponent(nextState, cb) {
         const importModules = Promise.all([
+          System.import('./containers/GeneratePage/reducer'),
           System.import('./containers/GeneratePage/index.jsx'),
         ])
 
         const renderRoute = loadModule(cb)
 
-        importModules.then(([component]) => {
+        importModules.then(([reducer, component]) => {
+          injectReducer('generatePage', reducer.default)
           renderRoute(component)
 
         })
