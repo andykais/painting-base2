@@ -22,9 +22,6 @@ def parseFile(fname, p):
 
 	return np.asarray(arr)
 
-def incImg(img, i, p):
-	return img
-
 def reshapeImg(img, l, w, p):
 	# reshape image to (l, w) and add/remove pixels as needed
 	while len(img) % p != 0:
@@ -40,21 +37,12 @@ def reshapeImg(img, l, w, p):
 	return img.reshape(l, w, p)
 
 if __name__ == "__main__":
-	# Usage: python create-image2.py <height> <width> <filename>
+	# Usage: python create-image2.py <height> <width> <arrayfname>
 	# open and parse image file or create random image
 	# and write reshaped image to img.png
-
-	img = parseFile(sys.argv[1], 3)
-
-	if sys.argv[2] == "--inc":
-		i = int(sys.argv[3])
-		img = incImg(img, i, sys.argv[3][-1] == '%')
-
-	if sys.argv[4] == "--dim":
-		l, w = int(sys.argv[5]), int(sys.argv[6])
-		img = reshapeImg(img, l, w, 3)
-
-	cv2.imwrite("img.png", img)
+	l, w = int(sys.argv[1]), int(sys.argv[2])
+	img = parseFile(sys.argv[3], 3)
+	cv2.imwrite("img.png", reshapeImg(img, l, w, 3))
 
 # TEST CASES
 #     python create-image.py 300 600 random
