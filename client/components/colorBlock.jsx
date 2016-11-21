@@ -1,6 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router';
 
+/**
+  Helper fucntion to change hex string to integer
+  @param hex: string
+  @return number
+*/
 function hexToInt(hex) {
   return parseInt(hex, 16);
 }
@@ -12,14 +17,20 @@ class colorBlock extends React.Component {
     this.state = {color: props.color }
   }
 
+  /**
+    Fucntion to run after document has loaded for initial color
+  */
   componentDidMount() {
-    console.log('HERE');
     let c=document.getElementById("pixelCanvas");
     let ctx=c.getContext("2d");
     ctx.fillStyle='#'+this.state.color.toString(16);
     ctx.fillRect(0,0,300,150);
   }
 
+  /**
+    Handle submit of request to change color
+    This will update the states color
+  */
   _handleSubmit(e) {
     e.preventDefault();
     this.state.color=Math.floor(Math.random()*16777215);
@@ -30,6 +41,9 @@ class colorBlock extends React.Component {
     this.forceUpdate();
   }
 
+  /**
+  Render Function to Display HTML of component
+  */
   render() {
     return (
       <div className="colorBlock">
