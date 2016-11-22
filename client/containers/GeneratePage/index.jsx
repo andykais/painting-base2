@@ -1,8 +1,12 @@
+/*
+ * generation page, houses canvas and slider widget
+ */
+
 import React from 'react'
 import {connect} from 'react-redux'
 
-import { setFirstResolution } from './actions'
-import selectGeneratePage from './selectors'
+import Canvas from '~/components/Canvas/index.jsx'
+import Increment from '~/components/Increment/index.jsx'
 
 
 const Generate = (props) => {
@@ -10,16 +14,20 @@ const Generate = (props) => {
   const height = props.height
 
   return (
-    <p> image generation goes here. Size {width * height} </p>
+    <div>
+      <Canvas
+        width={width}
+        height={height}
+        percent={props.percent}
+        percentChanged={props.percentChanged}
+        doneChangingPercent={props.doneChangingPercent}
+        binStr={props.binStr}/>
+      <Increment
+        percentage={props.percent}
+        incrementImage={props.changePercentage}
+      />
+    </div>
   )
 }
 
-const mapStateToProps = selectGeneratePage()
-
-function mapDispatchToProps(dispatch) {
-  return {
-    dispatch,
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Generate)
+export default Generate

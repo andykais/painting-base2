@@ -9,69 +9,57 @@ const loadModule = (cb) => (componentModule) => {
   cb(null, componentModule.default)
 }
 
+export function createRootComponent(store, cb) {
+  const { injectReducer, injectSagas  } = getAsyncInjectors(store) //eslint-disable-line no-unused-vars
+
+  const importModules = Promise.all([
+    System.import('./containers/App/reducer'),
+    System.import('./containers/App/index.jsx'),
+  ])
+
+  const renderRoute = loadModule(cb)
+
+  importModules.then(([reducer, component]) => {
+    injectReducer('App', reducer.default)
+    renderRoute(component)
+
+  })
+
+  importModules.catch(errorLoading)
+}
+
 export default function createRoutes(store) {
   // Create reusable async injectors using getAsyncInjectors factory
   const { injectReducer, injectSagas  } = getAsyncInjectors(store) //eslint-disable-line no-unused-vars
 
+  // reducers for each container component can easily be inserted
   return [
     {
       path: '/',
       name: 'home',
       getComponent(nextState, cb) {
-        const importModules = Promise.all([
-          System.import('./containers/HomePage/reducer'),
-          System.import('./containers/HomePage/index.jsx'),
-        ])
-
-        const renderRoute = loadModule(cb)
-
-        importModules.then(([reducer, component]) => {
-          injectReducer('homePage', reducer.default)
-          renderRoute(component)
-
-        })
-
-        importModules.catch(errorLoading)
+        System.import('./containers/HomePage/index.jsx')
+          .then(loadModule(cb))
+          .catch(errorLoading)
       },
     },
     {
       path: '/generate',
       name: 'generate',
       getComponent(nextState, cb) {
-        const importModules = Promise.all([
-          System.import('./containers/GeneratePage/reducer'),
-          System.import('./containers/GeneratePage/index.jsx'),
-        ])
-
-        const renderRoute = loadModule(cb)
-
-        importModules.then(([reducer, component]) => {
-          injectReducer('generatePage', reducer.default)
-          renderRoute(component)
-
-        })
-
-        importModules.catch(errorLoading)
+        System.import('./containers/GeneratePage/index.jsx')
+          .then(loadModule(cb))
+          .catch(errorLoading)
       },
     },
     {
       path: '/about',
       name: 'about',
       getComponent(nextState, cb) {
-        const importModules = Promise.all([
-          System.import('./containers/AboutPage/index.jsx'),
-
-        ])
-
-        const renderRoute = loadModule(cb)
-
-        importModules.then(([component]) => {
-          renderRoute(component)
-
-        })
-
-        importModules.catch(errorLoading)
-      }
+        System.import('./containers/AboutPage/index.jsx')
+          .then(loadModule(cb))
+          .catch(errorLoading)
+      },
     },
     {
       path: '*',

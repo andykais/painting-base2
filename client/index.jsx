@@ -1,13 +1,13 @@
-import 'babel-polyfill'
+import 'babel-polyfill' // imports missing libs like System.import
 
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Provider } from 'react-redux'
+import { Provider } from 'react-redux' // propogates the store throughout application
 import { applyRouterMiddleware, Router, browserHistory } from 'react-router'
-import { syncHistoryWithStore } from 'react-router-redux';
+import { syncHistoryWithStore } from 'react-router-redux'
 import useScroll from 'react-router-scroll'
-import configureStore from './store'
-import './index.scss'
+import configureStore from './store' //import state manager
+import './index.scss' // import styles
 
 // Create redux store with history
 // this uses the singleton browserHistory provided by react-router
@@ -29,23 +29,31 @@ const history = syncHistoryWithStore(browserHistory, store, {
 import App from './containers/App/index.jsx'
 import createRoutes from './routes'
 
-const rootRoute = {
-  component: App,
-  childRoutes: createRoutes(store),
-}
+import { createRootComponent } from './routes'
 
-const render = () => {
-  ReactDOM.render(
-    <Provider store={store}>
-      <Router
-        history={browserHistory}
-        routes={rootRoute}
-        onUpdate={() => window.scrollTo(0, 0)}
-      />
-    </Provider>,
-    document.getElementById('root')
-  )
-}
-window.onload = () => {
-  render()
-}
+// create root app and inject reducer
+const AppRoot = createRootComponent(store, function() {
+  const rootRoute = {
+    component: App,
+    childRoutes: createRoutes(store),
+  }
+
+  const render = () => {
+    ReactDOM.render(
+      <Provider store={store}>
+        <Router
+          history={browserHistory}
+          routes={rootRoute}
+          onUpdate={() => window.scrollTo(0, 0)}
+        />
+      </Provider>,
+      document.getElementById('root')
+    )
+  }
+  window.onload = () => {
+    render()
+  }
+
+})
+
+

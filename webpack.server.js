@@ -1,3 +1,9 @@
+/*
+ * development server that triggers webpack compile on file changes
+ * first entry point of the application
+ * a.k.a. `node webpack.server.js`
+ */
+
 var webpack = require('webpack')
   , WebpackDevServer = require('webpack-dev-server')
   , nodemon = require('nodemon')
@@ -8,7 +14,7 @@ var webpack = require('webpack')
   , configServer = require('./webpack.config')[1]
 
 
-// run webpack on client
+// run webpack-dev-server on client
 configClient.entry.unshift(
   'react-hot-loader/patch',
   'webpack-dev-server/client?http://localhost:8080/',

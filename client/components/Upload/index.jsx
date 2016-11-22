@@ -1,3 +1,8 @@
+/*
+ * upload component, will contain image upload form
+ */
+
+
 import React from 'react'
 
 const Upload = ({}) => (

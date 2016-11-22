@@ -1,3 +1,8 @@
+/*
+ * holds values for all paths used in webpack build system
+ */
+
+
 'use strict'
 const path = require('path')
 

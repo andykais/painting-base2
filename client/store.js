@@ -27,6 +27,7 @@ export default function configureStore(initialState = {}, history) {
     compose(...enhancers)
   )
 
+  // for development, keeps the store consistent between page refreshes
   if (module.hot) {
     System.import('./reducers').then((reducerModule) => {
       const createReducers = reducerModule.default
