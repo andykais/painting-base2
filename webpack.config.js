@@ -1,11 +1,19 @@
+/*
+ * webpack build config
+ * builds both client/ and server/
+ * places both in dist/ folder for use
+ * chooses values based on development or production version
+ */
+
 const webpack = require('webpack')
   , conf = require('./webpack.paths.js')
   , HtmlWebpackPlugin = require('html-webpack-plugin')
   , CleanWebpackPlugin = require('clean-webpack-plugin')
   , ExtractTextPlugin = require('extract-text-webpack-plugin')
   , LiveReloadPlugin = require('webpack-livereload-plugin')
-  , isProd = (process.env.NODE_ENV == 'production')
+  , isProd = (process.env.NODE_ENV == 'production') // tells functions which plugins to choose based on production or development
 
+// babel converts es6 javascript into es2015
 var commonLoaders = [
   { test: /\.jsx?$/, loader: 'babel' },
 ]
@@ -15,6 +23,8 @@ function getPlugins() {
   var plugins = []
 
   if (isProd) {
+    // various optimizations only used in production
+    // convenient for both front and backend
     plugins = [
       new webpack.DefinePlugin({
         'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
@@ -38,6 +48,8 @@ function getPlugins() {
 }
 
 function getClientPlugins() {
+  // plugins specific to client
+  // HtmlWebpackPlugin creates index.html page from template
   var plugins = getPlugins()
   plugins = [
     new HtmlWebpackPlugin({
@@ -48,6 +60,7 @@ function getClientPlugins() {
   ].concat(plugins)
 
   if (isProd) {
+    // puts hashes in filenames so browers only cache current version
     plugins = [
       new ExtractTextPlugin('app.[chunkhash].css'),
       new LiveReloadPlugin(),
@@ -69,6 +82,7 @@ function getServerPlugins() {
       new CleanWebpackPlugin([conf.distServer]),
     ].concat(plugins)
   } else {
+    // sourcemaps to map concatted javascript back into original source files (development)
     plugins = [
       new webpack.BannerPlugin('require("source-map-support").install();',
         { raw: true, entryOnly: false })
@@ -78,6 +92,7 @@ function getServerPlugins() {
 }
 
 
+// paths for outputting
 function getOutput(setPath) {
   var output = {
     path: setPath,
@@ -92,6 +107,7 @@ function getOutput(setPath) {
 
 module.exports = [
   {
+    // client side compile
     name: 'browser',
     devtool: !isProd ? 'source-map' : null,
     entry: [
@@ -102,18 +118,12 @@ module.exports = [
       loaders: [{
         test: /\.scss$/,
         exclude: /node_modules/,
-        loader: ExtractTextPlugin.extract('style-loader', 'css-loader!postcss-loader')
+        loader: ExtractTextPlugin.extract('style-loader', 'css-loader!sass-loader')
       }].concat(commonLoaders)
-    },
-    postcss: function(webpack) {
-      return [
-        require('postcss-smart-import')({ addDependencyTo: webpack }),
-        require('postcss-cssnext')(),
-        require('postcss-nested')(),
-      ]
     },
     plugins: getClientPlugins()
   }
+  // server side compile
   , {
     name: 'server side compile',
     devtool: !isProd ? 'source-map' : null,

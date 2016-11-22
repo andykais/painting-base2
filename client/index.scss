@@ -1,8 +1,11 @@
+
 body {
   margin: 0;
   padding: 0;
-  background: grey;
   #root {
-    color: white;
+    //color: white;
   }
 }
+
+@import 'assets/styles/_mixins.scss';
+@import 'assets/styles/layouts.scss';

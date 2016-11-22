@@ -1,3 +1,7 @@
+/* 
+ * page reached when a url is specified that does not exist
+ */
+
 import React from 'react';
 import { Link } from 'react-router';
 
