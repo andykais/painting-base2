@@ -1,3 +1,9 @@
+const blankOutCanvas = (canvasData) => {
+  canvasData.forEach(function (val, i, arr) {
+    arr[i] = 200
+  })
+}
+
 const stringToCanvas = (binStr, canvasData) => {
   //increment like binary
   let strPos = 0
@@ -55,7 +61,7 @@ const generatePixels = (canvasData) => {
 }
 
 /* for small increments (<MAXINT), just use a number for simplicitiy */
-const incrementByNum = (canvasData, num, k) => {
+const incrementByNumber = (canvasData, num, k) => {
   for (let i = k; num > 0; i++) {
     let m = canvasData[i] + num%256;
     canvasData[i] = m%256;
@@ -132,7 +138,7 @@ const incrementByPercent = (canvasData, percent) => {
   let str = percentToString(percent, canvasData.length*3/4);
 
   for (let k = 0; k < canvasData.length; k += 4) {
-    incrementByNum(canvasData, parseInt(str.substring(str.length-24, str.length), 2), k);
+    incrementByNumber(canvasData, parseInt(str.substring(str.length-24, str.length), 2), k);
     str = str.substring(0, str.length-24);
     if (str == '') {
       break;
@@ -142,50 +148,10 @@ const incrementByPercent = (canvasData, percent) => {
 
 
 module.exports = {
+  blankOutCanvas: blankOutCanvas,
   generateString: generateString,
   percentToString: percentToString,
   stringToCanvas: stringToCanvas,
   generatePixels: generatePixels,
-  incrementByNum: incrementByNum,
+  incrementByNumber: incrementByNumber,
   incrementByPercent: incrementByPercent
-//=======
-//const binBoolToInt = (str) => {
-  //let num = 0
-  //for (var i = 0; i<str.length; i++) {
-    //num = num + parseInt(str[i])
-    //num = num * 2
-  //}
-  //return num / 2
-
-//}
-
-//const getRandomByte = () => {
-  //return Math.floor(Math.random() * 2) === 1 ? true : false
-//}
-//const getRandomByteArray = (N) => {
-  //var arr = new Array(N)
-  //for (var i=0; i<N; i++) {
-    //arr[i] = getRandomByte()
-    ////arr.push(getRandomByte())
-  //}
-  //return arr
-  ////return Array.apply(null, {length: N}).map(Function.call, getRandomByte)
-  ////return Array.apply(null, {length: N}).map(1)
-//}
-
-  //console.log('str:', strPos, 'img:', imgPos)
-  //for (var i=0; i < canvasData.data.length; i+= 4 ) {
-  //canvasData.data[i] = Math.floor(Math.random() * 256)
-  //canvasData.data[i+1] = Math.floor(Math.random() * 256)
-  //canvasData.data[i+2] = Math.floor(Math.random() * 256)
-  //canvasData.data[i+3] = 255
-  //}
-  //return canvasData
-//}
-
-
-//module.exports = {
-  //randomByteArray: getRandomByteArray,
-  //generatePixels: generatePixels
-//>>>>>>> master
-}

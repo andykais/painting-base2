@@ -12,8 +12,8 @@ const Increment = (props) => (
   <div>
     <label htmlFor="increment">increment image</label>
     <input name="increment" type="range" min={min} max={max} value={props.percent}
-      onChange={(e) => {
-        props.incrementImage(e.target.value / max)
+      onMouseUp={(e) => {
+        props.incrementByPercent(e.target.value / max)
       }}
     />
   </div>

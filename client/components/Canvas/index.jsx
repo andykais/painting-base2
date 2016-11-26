@@ -8,20 +8,35 @@ import React from 'react'
 
 import {stringToCanvas, generatePixels, incrementByPercent} from '~/libs/transformations'
 
+let shouldGenerate = (canvasData, width, height) => {
+  if (!canvasData.data) return true
+  if (canvasData.data.length != width * height * 4) return true
+  return false
+}
+
 class Canvas extends React.Component {
   updateCanvas() {
+    let width = this.canvas.width
+    let height = this.canvas.height
+
     let ctx = this.canvas.getContext('2d')
-    let canvasData = ctx.getImageData(0, 0, this.canvas.width, this.canvas.height)
+    let canvasData = this.props.canvasData
 
-    if (this.props.percentChanged) {
-
-      incrementByPercent(canvasData.data, this.props.percent)
-      this.props.doneChangingPercent()
-    } else {
+    // initial random generation of image
+    if (shouldGenerate(canvasData, width, height)) {
+      canvasData = ctx.createImageData(width, height)
       generatePixels(canvasData.data)
+      this.props.initImageData(canvasData)
     }
-    ctx.putImageData(canvasData, 0, 0)
+
+    // helper variables tell canvas when it should update itself
+    // because redux does not regcognize changes in array
+    if (this.props.shouldUpdate) {
+      ctx.putImageData(canvasData, 0, 0)
+      this.props.doneUpdating()
+    }
   }
+
   componentDidMount() {
     this.updateCanvas()
   }
@@ -30,9 +45,11 @@ class Canvas extends React.Component {
   }
 
   render() {
+    console.log('rendered')
     return (
       <div>
         <canvas
+          id='canvas'
           width={this.props.width}
           height={this.props.height}
           ref={(c) =>

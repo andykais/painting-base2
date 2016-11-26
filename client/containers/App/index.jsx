@@ -3,21 +3,36 @@ import { connect } from 'react-redux'
 
 import Navbar from '~/components/Navbar/index.jsx'
 import { selectAppState } from './selectors'
-import { generateRandom, changeSide, changePercent, doneChangingPercent } from './actions'
+import {
+  generateRandom,
+    changeSide,
+    changePercent,
+    doneChangingPercent,
+    setImageData,
+    incImageDataByPercent,
+    incImageDataByNumber,
+    tellCanvasToStopUpdating,
+} from './actions'
 
 const App = (props) => {
   const functionsForChildren = {
-      changeSide: props.changeSide,
-      changePercentage: props.changePercentage,
-      doneChangingPercent: props.doneChangingPercent,
-      percentChanged: props.percentChanged,
-      generateRandom: props.generateRandom,
+    changeSide: props.changeSide,
+    changePercentage: props.changePercentage,
+    doneChangingPercent: props.doneChangingPercent,
+    percentChanged: props.percentChanged,
+    generateRandom: props.generateRandom,
+    tellCanvasToStopUpdating: props.tellCanvasToStopUpdating,
+    setImageData: props.setImageData,
+    incImageDataByPercent: props.incImageDataByPercent,
+    incImageDataByNumber: props.incImageDataByNumber,
   }
   const variablesForChildren = {
-      width: props.width,
-      height: props.height,
-      percent: props.percent,
-      binStr: props.binStr
+    width: props.width,
+    height: props.height,
+    percent: props.percent,
+    binStr: props.binStr,
+    canvasData: props.canvasData,
+    shouldRenderCanvas: props.shouldRenderCanvas,
   }
 
   // functions and state variables sent through all containers
@@ -53,6 +68,10 @@ function mapDispatchToProps(dispatch) {
     changePercentage: (num) => dispatch(changePercent(num)),
     doneChangingPercent: () => dispatch(doneChangingPercent()),
     generateRandom: () => dispatch(generateRandom()),
+    tellCanvasToStopUpdating: () => dispatch(tellCanvasToStopUpdating()),
+    setImageData: (canvasData) => dispatch(setImageData(canvasData)),
+    incImageDataByPercent: (percent) => dispatch(incImageDataByPercent(percent)),
+    incImageDataByNumber: (number) => dispatch(incImageDataByNumber(number)),
     dispatch,
   }
 }
