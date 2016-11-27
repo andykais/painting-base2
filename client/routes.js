@@ -53,6 +53,15 @@ export default function createRoutes(store) {
       },
     },
     {
+      path: '/number',
+      name: 'number',
+      getComponent(nextState, cb) {
+        System.import('./containers/NumberPage/index.jsx')
+          .then(loadModule(cb))
+          .catch(errorLoading)
+      },
+    },
+    {
       path: '/about',
       name: 'about',
       getComponent(nextState, cb) {

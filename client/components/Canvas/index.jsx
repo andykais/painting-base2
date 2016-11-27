@@ -6,7 +6,7 @@
 
 import React from 'react'
 
-import {stringToCanvas, generatePixels, incrementByPercent} from '~/libs/transformations'
+import {stringToCanvas, canvasToString, generateRandomString, moveToPercent, incrementByNum} from '~/libs/transformations'
 
 class Canvas extends React.Component {
   updateCanvas() {
@@ -14,11 +14,19 @@ class Canvas extends React.Component {
     let canvasData = ctx.getImageData(0, 0, this.canvas.width, this.canvas.height)
 
     if (this.props.percentChanged) {
-
-      incrementByPercent(canvasData.data, this.props.percent)
+      let str = moveToPercent(this.props.percent, canvasData.data.length/4)
+      stringToCanvas(str, canvasData.data)
       this.props.doneChangingPercent()
+    } else if (false) {
+      // ** increment/decrement by small number **
+      // better efficienty -> keep a string representation of the canvas in props/state
+      // give negative number for decrement
+
+      // let str = incrementByNum(num, canvasToString(canvasData.data))
+      // stringToCanvas(str, canvasData.data)
     } else {
-      generatePixels(canvasData.data)
+      // let str = generateRandomString(canvasData.data.length*6)
+      // stringToCanvas(str, canvasData.data)
     }
     ctx.putImageData(canvasData, 0, 0)
   }
