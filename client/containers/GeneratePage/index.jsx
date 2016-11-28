@@ -11,12 +11,14 @@ import Upload from '~/components/Upload/index.jsx'
 
 
 const Generate = (props) => {
-  const width = props.width
-  const height = props.height
+  const width = props.width;
+  const height = props.height;
+  const canvasID = 'generateCanvas';
 
   return (
     <div>
       <Canvas
+        canvasID={canvasID}
         width={width}
         height={height}
         percent={props.percent}
@@ -28,6 +30,7 @@ const Generate = (props) => {
         incrementImage={props.changePercentage}
       />
       <Upload
+        canvasID={canvasID}
       />
     </div>
   )
