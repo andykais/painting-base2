@@ -5,17 +5,20 @@
 
 
 import { fromJS } from 'immutable'
+import { combineReducers } from 'redux-immutable'
 
-import { incrementByPercent, blankOutCanvas } from '~/libs/transformations'
+import { incrementByPercent, incrementByNumber, blankOutCanvas, generatePixels } from '~/libs/transformations'
 import {
   CHANGE_SIZE,
-    CHANGE_PERCENT,
-    PERCENT_CHANGED,
-    SET_CANVAS_DATA,
+    SET_CANVASDATA,
+    GENERATE_RANDOM_CANVASDATA,
     INC_IMG_BY_PERCENT,
     INC_IMG_BY_NUMBER,
     SET_SHOULD_RENDER_TO_FALSE,
+    CHANGE_INCREMENT_NUMBER,
 } from './constants'
+
+
 
 const initialState = fromJS({
   width: 100, // canvas width
@@ -23,32 +26,46 @@ const initialState = fromJS({
   percent: 0.50, // default percent for widget
   binStr: '', // binary string representing image
   canvasData: {}, // image pixel values that really are image
-  shouldRenderCanvas: true,
-  percentChanged: false // boolean to tell canvas when to update
+  shouldRenderCanvas: false,
+  percentChanged: false, // boolean to tell canvas when to update
+  incrementNumber: 100
 })
+
 
 let appReducer = (state = initialState, action) => {
   const oldState = state.toJS()
   let canvasData
   switch(action.type) {
     case SET_SHOULD_RENDER_TO_FALSE:
-      console.log('setting render to false')
       return fromJS({
         ...oldState,
         shouldRenderCanvas: false
       })
-    case SET_CANVAS_DATA:
+    case SET_CANVASDATA:
       return fromJS({
         ...oldState,
         canvasData: action.canvasData,
         shouldRenderCanvas: true,
       })
+    case GENERATE_RANDOM_CANVASDATA:
+      canvasData = oldState.canvasData
+      if (oldState.width !== canvasData.width || oldState.height !== canvasData.height) {
+        var canvas = document.createElement('canvas')
+        canvas.width = oldState.width
+        canvas.height = oldState.height
+        var ctx = canvas.getContext('2d')
+        canvasData = ctx.createImageData(oldState.width, oldState.height)
+        generatePixels(canvasData.data)
+      }
+      return fromJS({
+        ...oldState,
+        canvasData: canvasData,
+        shouldRenderCanvas: true
+      })
     case INC_IMG_BY_PERCENT:
       canvasData = oldState.canvasData
-      //console.log('before:', canvasData.data[0])
       //blankOutCanvas(canvasData.data)
       incrementByPercent(canvasData.data, action.percent)
-      //console.log('after:', canvasData.data[0])
       return fromJS({
         ...oldState,
         canvasData: canvasData,
@@ -56,27 +73,21 @@ let appReducer = (state = initialState, action) => {
       })
     case INC_IMG_BY_NUMBER:
       canvasData = oldState.canvasData
+      incrementByNumber(canvasData.data, action.number, 0)
       return fromJS({
         ...oldState,
         canvasData: canvasData,
         shouldRenderCanvas: true,
       })
-
-    case CHANGE_PERCENT:
-      return fromJS({
-        ...oldState,
-        percentChanged: true,
-        percent: action.percent
-      })
-    case PERCENT_CHANGED:
-      return fromJS({
-        ...oldState,
-        percentChanged: false,
-      })
     case CHANGE_SIZE:
       return fromJS({
         ...oldState,
         ...action.side
+      })
+    case CHANGE_INCREMENT_NUMBER:
+      return fromJS({
+        ...oldState,
+        incrementNumber: action.number
       })
     default:
       return state
@@ -85,5 +96,3 @@ let appReducer = (state = initialState, action) => {
 
 
 export default appReducer
-
-

@@ -5,13 +5,11 @@
 
 import {
   CHANGE_SIZE,
-    CHANGE_PERCENT,
-    PERCENT_CHANGED,
-    CHANGE_STRING,
-    SET_CANVAS_DATA,
+    GENERATE_RANDOM_CANVASDATA,
     INC_IMG_BY_PERCENT,
     INC_IMG_BY_NUMBER,
     SET_SHOULD_RENDER_TO_FALSE,
+    CHANGE_INCREMENT_NUMBER,
 } from './constants'
 
 
@@ -43,12 +41,6 @@ export function incImageDataByNumber(num) {
   }
 }
 
-export function generateRandom() {
-  return {
-    type: CHANGE_STRING,
-  }
-}
-
 export function changeSide(sideLength) {
   return {
     type: CHANGE_SIZE,
@@ -56,15 +48,15 @@ export function changeSide(sideLength) {
   }
 }
 
-export function changePercent(percent) {
+export function generateRandomCanvasData() {
   return {
-    type: CHANGE_PERCENT,
-    percent: percent
+    type: GENERATE_RANDOM_CANVASDATA
   }
 }
 
-export function doneChangingPercent(percent) {
+export function changeIncrementNumber(number) {
   return {
-    type: PERCENT_CHANGED,
+    type: CHANGE_INCREMENT_NUMBER,
+    number: number,
   }
 }

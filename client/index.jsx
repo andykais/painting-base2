@@ -32,7 +32,7 @@ import createRoutes from './routes'
 import { createRootComponent } from './routes'
 
 // create root app and inject reducer
-const AppRoot = createRootComponent(store, function() {
+createRootComponent(store, function() {
   const rootRoute = {
     component: App,
     childRoutes: createRoutes(store),
@@ -42,7 +42,7 @@ const AppRoot = createRootComponent(store, function() {
     ReactDOM.render(
       <Provider store={store}>
         <Router
-          history={browserHistory}
+          history={history}
           routes={rootRoute}
           onUpdate={() => window.scrollTo(0, 0)}
         />

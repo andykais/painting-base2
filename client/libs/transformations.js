@@ -155,3 +155,4 @@ module.exports = {
   generatePixels: generatePixels,
   incrementByNumber: incrementByNumber,
   incrementByPercent: incrementByPercent
+}

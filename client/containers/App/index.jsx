@@ -2,34 +2,32 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 import Navbar from '~/components/Navbar/index.jsx'
-import { selectAppState } from './selectors'
+import selectAppState from './selectors'
 import {
-  generateRandom,
     changeSide,
-    changePercent,
-    doneChangingPercent,
     setImageData,
+    generateRandomCanvasData,
     incImageDataByPercent,
     incImageDataByNumber,
     tellCanvasToStopUpdating,
+    changeIncrementNumber,
 } from './actions'
 
 const App = (props) => {
+
   const functionsForChildren = {
     changeSide: props.changeSide,
-    changePercentage: props.changePercentage,
-    doneChangingPercent: props.doneChangingPercent,
-    percentChanged: props.percentChanged,
-    generateRandom: props.generateRandom,
+    changeIncrementNumber: props.changeIncrementNumber,
     tellCanvasToStopUpdating: props.tellCanvasToStopUpdating,
     setImageData: props.setImageData,
+    generateRandomCanvasData: props.generateRandomCanvasData,
     incImageDataByPercent: props.incImageDataByPercent,
     incImageDataByNumber: props.incImageDataByNumber,
   }
   const variablesForChildren = {
     width: props.width,
     height: props.height,
-    percent: props.percent,
+    incrementNumber: props.incrementNumber,
     binStr: props.binStr,
     canvasData: props.canvasData,
     shouldRenderCanvas: props.shouldRenderCanvas,
@@ -46,7 +44,7 @@ const App = (props) => {
 
   return (
     <div id='app-container'>
-      <Navbar/>
+      <Navbar generateRandomCanvasData={props.generateRandomCanvasData}/>
       <div className='app-content'>
         {childrenWithProps}
       </div>
@@ -65,11 +63,10 @@ const mapStateToProps = selectAppState()
 function mapDispatchToProps(dispatch) {
   return {
     changeSide: (side) => dispatch(changeSide(side)),
-    changePercentage: (num) => dispatch(changePercent(num)),
-    doneChangingPercent: () => dispatch(doneChangingPercent()),
-    generateRandom: () => dispatch(generateRandom()),
+    changeIncrementNumber: (number) => dispatch(changeIncrementNumber(number)),
     tellCanvasToStopUpdating: () => dispatch(tellCanvasToStopUpdating()),
     setImageData: (canvasData) => dispatch(setImageData(canvasData)),
+    generateRandomCanvasData: () => dispatch(generateRandomCanvasData()),
     incImageDataByPercent: (percent) => dispatch(incImageDataByPercent(percent)),
     incImageDataByNumber: (number) => dispatch(incImageDataByNumber(number)),
     dispatch,
