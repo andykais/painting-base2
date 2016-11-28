@@ -19,17 +19,11 @@ const HomePage = (props) => (
       onChange={(sideLength) => props.changeSide(sideLength)}
       generateRandom={props.generateRandomCanvasData}
     >
-      <Link to={{
-        pathname: 'generate',
-          query: {
-            width: props.width,
-            height: props.height
-          }
-      }}>Generate Image</Link>
-  </ChooseSize>
-  <p> OR </p>
-  <Upload/>
-</div>
+      <Link to='generate'>Generate Image</Link>
+    </ChooseSize>
+    <p> OR </p>
+    <Upload/>
+  </div>
 )
 
 

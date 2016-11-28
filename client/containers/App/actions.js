@@ -21,7 +21,7 @@ export function tellCanvasToStopUpdating() {
 
 export function setImageData(canvasData) {
   return {
-    type: SET_CANVAS_DATA,
+    type: SET_CANVASDATA,
     canvasData: canvasData
   }
 }

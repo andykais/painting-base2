@@ -24,8 +24,8 @@ const Increment = (props) => (
           props.updateIncrementNumber(e.target.value)
         }}
       />
-      <button onChange={() => {
-        props.incrementNumber(props.incrementNumber)
+      <button onClick={() => {
+        props.incrementByNumber(props.number)
       }}>increment by value</button>
     </div>
 
