@@ -22,7 +22,6 @@ export function createRootComponent(store, cb) {
   importModules.then(([reducer, component]) => {
     injectReducer('App', reducer.default)
     renderRoute(component)
-
   })
 
   importModules.catch(errorLoading)

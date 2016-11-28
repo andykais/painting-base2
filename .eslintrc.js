@@ -8,7 +8,8 @@ module.exports = {
     "ecmaVersion": 6,
     "sourceType": "module",
     "ecmaFeatures": {
-      "jsx": true
+      "jsx": true,
+      "experimentalObjectRestSpread": true
     }
   },
   "rules": {
@@ -18,7 +19,10 @@ module.exports = {
     "no-console": 0,
     "indent": [
       "error",
-      2
+      2,
+      {
+        "SwitchCase": 1
+      },
     ],
     "linebreak-style": [
       2,
