@@ -17,7 +17,7 @@ const HomePage = (props) => (
       width={props.width}
       height={props.height}
       onChange={(sideLength) => props.changeSide(sideLength)}
-      generateRandom={props.generateRandom}
+      generateRandom={props.generateRandomCanvasData}
     >
       <Link to={{
         pathname: 'generate',
