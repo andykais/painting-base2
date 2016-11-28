@@ -33,6 +33,7 @@ class Canvas extends React.Component {
     return (
       <div>
         <canvas
+          id='generateCanvas'
           width={this.props.width}
           height={this.props.height}
           ref={(c) =>
