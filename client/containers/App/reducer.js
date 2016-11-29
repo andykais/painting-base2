@@ -20,7 +20,7 @@ import {
 const initialState = fromJS({
   width: 100, // canvas width
   height: 100, // canvas height
-  percent: 0.50, // default percent for widget
+  percent: 500, // default percent for widget
   binStr: '', // binary string representing image
   canvasData: {}, // image pixel values that really are image
   shouldRenderCanvas: false,

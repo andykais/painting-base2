@@ -26,7 +26,7 @@ const Generate = (props) => {
         doneUpdating={props.tellCanvasToStopUpdating}
       />
       <Increment
-        percentage={props.percent}
+        percent={props.percent}
         number={incrementNumber}
         incrementByPercent={props.incImageDataByPercent}
         updateIncrementNumber={props.changeIncrementNumber}

@@ -32,6 +32,7 @@ const App = (props) => {
   const variablesForChildren = {
     width: props.width,
     height: props.height,
+    percent: props.percent,
     incrementNumber: props.incrementNumber,
     binStr: props.binStr,
     canvasData: props.canvasData,
