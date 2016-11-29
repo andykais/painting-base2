@@ -21,7 +21,6 @@ class Canvas extends React.Component {
 
     let ctx = this.canvas.getContext('2d')
     let canvasData = this.props.canvasData
-
     if (!canvasData.data) {
       this.props.initImageData()
     }
