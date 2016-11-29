@@ -1,8 +1,6 @@
 /*
- *
  * App constants
  * used to tell reducer which unique action was chosen
- *
  */
 
 export const SET_CANVASDATA = 'containers/App/INIT_CANVAS_DATA'

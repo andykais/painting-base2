@@ -6,9 +6,7 @@
 
 import React from 'react'
 
-import {stringToCanvas, incrementByPercent} from '~/libs/transformations'
-
-import './index.scss' // import styles
+import './index.scss'
 
 let shouldGenerate = (canvasData, width, height) => {
   if (!canvasData.data) return true
@@ -17,6 +15,7 @@ let shouldGenerate = (canvasData, width, height) => {
 }
 
 class Canvas extends React.Component {
+  /* update canvas by generating random image or incrementing image */
   updateCanvas() {
     let width = this.canvas.width
     let height = this.canvas.height
@@ -26,8 +25,7 @@ class Canvas extends React.Component {
     if (!canvasData.data) {
       this.props.initImageData()
     }
-    // helper variables tell canvas when it should update itself
-    // because redux does not regcognize changes in array
+    /* helper variables tell canvas when to update, because redux does not recognize changes in array */
     if (this.props.shouldUpdate) {
       ctx.putImageData(canvasData, 0, 0)
       this.props.doneUpdating()
@@ -37,6 +35,7 @@ class Canvas extends React.Component {
   componentDidMount() {
     this.updateCanvas()
   }
+
   componentDidUpdate() {
     this.updateCanvas()
   }
@@ -44,6 +43,7 @@ class Canvas extends React.Component {
     console.log('unmounting canvas')
   }
 
+  /* create canvas element to render */
   render() {
     return (
       <div>
@@ -54,6 +54,7 @@ class Canvas extends React.Component {
           ref={(c) =>
             this.canvas = c
           }
+          id='canvas'
         ></canvas>
       </div>
     )

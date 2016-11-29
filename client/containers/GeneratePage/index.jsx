@@ -7,8 +7,8 @@ import {connect} from 'react-redux'
 
 import Canvas from '~/components/Canvas/index.jsx'
 import Increment from '~/components/Increment/index.jsx'
+import ImageNumber from '~/components/ImageNumber/index.jsx'
 import Upload from '~/components/Upload/index.jsx'
-
 
 const Generate = (props) => {
 
@@ -23,7 +23,8 @@ const Generate = (props) => {
         canvasData={canvasData}
         shouldUpdate={shouldRenderCanvas}
         initImageData={props.generateRandomCanvasData}
-        doneUpdating={props.tellCanvasToStopUpdating}/>
+        doneUpdating={props.tellCanvasToStopUpdating}
+      />
       <Increment
         percentage={props.percent}
         number={incrementNumber}
@@ -31,6 +32,7 @@ const Generate = (props) => {
         updateIncrementNumber={props.changeIncrementNumber}
         incrementByNumber={props.incImageDataByNumber}
       />
+      <ImageNumber/>
     </div>
   )
 }

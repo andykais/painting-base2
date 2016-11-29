@@ -1,3 +1,8 @@
+/*
+ * main page for app
+ * render navbar and all children for each page
+ */
+
 import React from 'react'
 import { connect } from 'react-redux'
 
@@ -33,8 +38,7 @@ const App = (props) => {
     shouldRenderCanvas: props.shouldRenderCanvas,
   }
 
-  // functions and state variables sent through all containers
-  // to be available to various parts of application
+  /* functions and state variables sent through all containers to be available to various parts of application */
   const childrenWithProps = React.Children.map(props.children,
     (child) => React.cloneElement(child, {
       ...functionsForChildren,
@@ -54,12 +58,10 @@ const App = (props) => {
 
 }
 
-
-// takes state variables in reducer, makes them available in this.props variable
+/* takes state variables in reducer, makes them available in this.props variable */
 const mapStateToProps = selectAppState()
 
-// takes actions combined with props.dispatch (which sends action to reducer)
-// unnecessary but simplifies the call within App
+/* takes actions combined with props.dispatch (which sends action to reducer) */
 function mapDispatchToProps(dispatch) {
   return {
     changeSide: (side) => dispatch(changeSide(side)),

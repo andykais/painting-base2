@@ -1,5 +1,6 @@
   /* 
-   * component changes width and height for app
+   * size component
+   * changes width and height for image
    */
 
 import React from 'react'
@@ -28,4 +29,3 @@ const ChooseSize = (props) => {
 }
 
 export default ChooseSize
-

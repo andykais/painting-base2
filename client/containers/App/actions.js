@@ -1,7 +1,7 @@
-/* main App actions
+/* 
+ * main App actions
  * each action is sent to the reducer to update the state
  */
-
 
 import {
   CHANGE_SIZE,
@@ -12,7 +12,6 @@ import {
     CHANGE_INCREMENT_NUMBER,
     SET_CANVASDATA,
 } from './constants'
-
 
 export function tellCanvasToStopUpdating() {
   return {
