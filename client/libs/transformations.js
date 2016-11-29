@@ -2,6 +2,13 @@
 /*           transformations between canvas and number           */
 /* ------------------------------------------------------------- */
 
+/* make canvas white */
+const blankOutCanvas = (canvasData) => {
+  canvasData.forEach(function (val, i, arr) {
+    arr[i] = 200
+  })
+}
+
 /* put binary string in canvas */
 const stringToCanvas = (str, canvasData) => {
   let size = canvasData.length*6;
@@ -140,27 +147,32 @@ const strFill = (n, fill) => {
   return s + fill;
 }
 
+/* ------------------------------------------------------------- */
+/*                     canvas modifications                      */
+/* ------------------------------------------------------------- */
+
 /* move to new percentage point */
-const moveToPercent = (percent, str) => {
+const moveToPercent = (canvasData, percent) => {
+  let str = canvasToString(canvasData);
   let black = (percent < 0.5);
   percent = Math.floor(str.length*2*Math.abs(percent-0.5));
 
   if (black) {
-    return strFill(percent, '0') + generateRandomString(str.length-percent) /*str.substring(percent, str.length);*/;
+    str = strFill(percent, '0') + generateRandomString(str.length-percent) /*str.substring(percent, str.length);*/;
   } else {
-    return generateRandomString(str.length-percent) /*str.substring(0, str.length-percent)*/ + strFill(percent, '1');
+    str = generateRandomString(str.length-percent) /*str.substring(0, str.length-percent)*/ + strFill(percent, '1');
   }
-
-  // black and white
-  // move through 16 different alpha's for each pixel
+  stringToCanvas(str, canvasData);
 }
 
 /* increment/decrement by a small number (< MAXINT) */
-const incrementByNum = (num, str) => {
+const incrementByNum = (canvasData, num) => {
+  let str = canvasToString(canvasData);
   if (num < 0) {
-    return decrementByNum(-1*num, str);
+    str = decrementByNum(-1*num, str);
   }
-  return addBin(str, num.toString(2));
+  str = addBin(str, num.toString(2));
+  stringToCanvas(str, canvasData);
 }
 
 /* decrement by a small number */
@@ -169,6 +181,7 @@ const decrementByNum = (num, str) => {
 }
 
 module.exports = {
+  blankOutCanvas: blankOutCanvas,
   stringToCanvas: stringToCanvas,
   canvasToString: canvasToString,
   stringToNumber: stringToNumber,

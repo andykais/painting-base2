@@ -6,30 +6,30 @@
 
 import React from 'react'
 
-import {stringToCanvas, canvasToString, generateRandomString, moveToPercent, incrementByNum} from '~/libs/transformations'
+import './index.scss'
+
+let shouldGenerate = (canvasData, width, height) => {
+  if (!canvasData.data) return true
+  if (canvasData.data.length != width * height * 4) return true
+  return false
+}
 
 class Canvas extends React.Component {
   /* update canvas by generating random image or incrementing image */
   updateCanvas() {
-    let ctx = this.canvas.getContext('2d')
-    let canvasData = ctx.getImageData(0, 0, this.props.width, this.props.height)
+    let width = this.canvas.width
+    let height = this.canvas.height
 
-    /* increment by a percentage */
-    if (this.props.percentChanged) {
-      let str /*this.props.canvasString*/ = moveToPercent(this.props.percent, canvasToString(canvasData.data)/*this.props.canvasString*/)
-      stringToCanvas(str, canvasData.data)
-      this.props.doneChangingPercent()
-    } /* increment by an integer */
-    else if (false) {
-      // let str = incrementByNum(num, canvasToString(canvasData.data))
-      // stringToCanvas(str, canvasData.data)
-    } /* generate a random image */
-    else {
-      // let str = generateRandomString(canvasData.data.length*6)
-      // stringToCanvas(str, canvasData.data)
+    let ctx = this.canvas.getContext('2d')
+    let canvasData = this.props.canvasData
+    if (!canvasData.data) {
+      this.props.initImageData()
     }
-    // stringToCanvas(this.props.canvasString, canvasData.data)
-    ctx.putImageData(canvasData, 0, 0)
+    /* helper variables tell canvas when to update, because redux does not recognize changes in array */
+    if (this.props.shouldUpdate) {
+      ctx.putImageData(canvasData, 0, 0)
+      this.props.doneUpdating()
+    }
   }
 
   componentDidMount() {
@@ -39,12 +39,16 @@ class Canvas extends React.Component {
   componentDidUpdate() {
     this.updateCanvas()
   }
+  componentWillDismount() {
+    console.log('unmounting canvas')
+  }
 
   /* create canvas element to render */
   render() {
     return (
       <div>
         <canvas
+          id='canvas'
           width={this.props.width}
           height={this.props.height}
           ref={(c) =>

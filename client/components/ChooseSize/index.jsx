@@ -4,7 +4,6 @@
    */
 
 import React from 'react'
-import { Link } from 'react-router'
 
 const ChooseSize = (props) => {
   return (
@@ -22,9 +21,7 @@ const ChooseSize = (props) => {
           height: parseInt(e.target.value)
         })
       }/>
-    <button
-      onClick={() => props.generateRandom()}
-    >
+    <button onClick={() => props.generateRandom()}>
       {props.children}
     </button>
   </div>

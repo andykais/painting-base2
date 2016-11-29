@@ -37,6 +37,7 @@ server.listen(8080, function (err) {
   console.log('webpack dev server listening on http://localhost:8080\n')
 })
 
+var shouldStartNodemon = false
 var nodemonStarted = false
 // run webpack on server
 webpack(configServer).watch({
@@ -49,7 +50,7 @@ webpack(configServer).watch({
     version: false,
     colors: true
   }))
-  if (!nodemonStarted) {
+  if (!nodemonStarted && shouldStartNodemon) {
     console.log('nodemon api server started.')
     nodemon({
       script: path.join(configServer.output.path, configServer.output.filename),
