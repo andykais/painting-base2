@@ -13,7 +13,7 @@ const max = 1000
 const Increment = (props) => (
   <div>
     <label htmlFor="incPercent">increment image slider</label>
-    <input name="incPercent" type="range" min={min} max={max} value={props.percent}
+    <input name="incPercent" type="range" min={min} max={max} defaultValue={max / 2}
       onMouseUp={(e) => {
         props.incrementByPercent(e.target.value / max)
       }}

@@ -9,12 +9,12 @@ import { combineReducers } from 'redux-immutable'
 import { moveToPercent, incrementByNumber, blankOutCanvas, generateRandomString, stringToCanvas, canvasToString } from '~/libs/transformations'
 import {
   CHANGE_SIZE,
-  SET_CANVASDATA,
-  GENERATE_RANDOM_CANVASDATA,
-  INC_IMG_BY_PERCENT,
-  INC_IMG_BY_NUMBER,
-  SET_SHOULD_RENDER_TO_FALSE,
-  CHANGE_INCREMENT_NUMBER
+    SET_CANVASDATA,
+    GENERATE_RANDOM_CANVASDATA,
+    INC_IMG_BY_PERCENT,
+    INC_IMG_BY_NUMBER,
+    SET_SHOULD_RENDER_TO_FALSE,
+    CHANGE_INCREMENT_NUMBER
 } from './constants'
 
 const initialState = fromJS({
@@ -39,6 +39,7 @@ let appReducer = (state = initialState, action) => {
         shouldRenderCanvas: false
       })
     case SET_CANVASDATA:
+      console.log('heere?')
       return fromJS({
         ...oldState,
         canvasData: action.canvasData,
@@ -54,8 +55,8 @@ let appReducer = (state = initialState, action) => {
         canvas.height = oldState.height
         var ctx = canvas.getContext('2d')
         canvasData = ctx.createImageData(oldState.width, oldState.height)
+        stringToCanvas(generateRandomString(canvasData.data.length*6), canvasData.data)
       }
-      stringToCanvas(generateRandomString(canvasData.data.length*6), canvasData.data)
       return fromJS({
         ...oldState,
         canvasData: canvasData,
@@ -63,10 +64,10 @@ let appReducer = (state = initialState, action) => {
       })
     case INC_IMG_BY_PERCENT:
       canvasData = oldState.canvasData
-      /* instead of passing canvasToString(canvasData.data)
-       * it's best to keep an original image string
-       * so decrementing can return the original image instead of random
-       */
+        /* instead of passing canvasToString(canvasData.data)
+         * it's best to keep an original image string
+         * so decrementing can return the original image instead of random
+         */
       str = moveToPercent(canvasToString(canvasData.data), action.percent)
       stringToCanvas(str, canvasData.data)
       return fromJS({
@@ -76,10 +77,10 @@ let appReducer = (state = initialState, action) => {
       })
     case INC_IMG_BY_NUMBER:
       canvasData = oldState.canvasData
-      /* instead of passing canvasToString(canvasData.data)
-       * it's best to keep an original image string
-       * so decrementing can return the original image instead of random
-       */
+        /* instead of passing canvasToString(canvasData.data)
+         * it's best to keep an original image string
+         * so decrementing can return the original image instead of random
+         */
       str = incrementByNumber(canvasToString(canvasData.data), parseInt(action.number))
       stringToCanvas(str, canvasData.data)
       return fromJS({
