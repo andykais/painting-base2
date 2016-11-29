@@ -16,6 +16,9 @@ const Increment = (props) => (
       onMouseUp={(e) => {
         props.incrementByPercent(e.target.value / max)
       }}
+      onKeyUp={(e) => {
+        props.incrementByPercent(e.target.value / max)
+      }}
     />
     <div>
       <label htmlFor="incNumber">increment image button</label>
