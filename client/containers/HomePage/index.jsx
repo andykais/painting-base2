@@ -22,7 +22,7 @@ const HomePage = (props) => (
       <Link to='generate'>Generate Image</Link>
     </ChooseSize>
     <p> OR </p>
-    <Upload/>
+    <Upload setImageData={props.setImageData}/>
   </div>
 )
 

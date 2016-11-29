@@ -7,9 +7,11 @@ import {connect} from 'react-redux'
 
 import Canvas from '~/components/Canvas/index.jsx'
 import Increment from '~/components/Increment/index.jsx'
+import Upload from '~/components/Upload/index.jsx'
 
 
 const Generate = (props) => {
+
   // store values from App
   const { width, height, canvasData, shouldRenderCanvas, incrementNumber } = props
 

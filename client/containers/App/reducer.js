@@ -45,6 +45,8 @@ let appReducer = (state = initialState, action) => {
       return fromJS({
         ...oldState,
         canvasData: action.canvasData,
+        width: action.canvasData.width,
+        height: action.canvasData.height,
         shouldRenderCanvas: true,
       })
     case GENERATE_RANDOM_CANVASDATA:
