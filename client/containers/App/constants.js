@@ -1,8 +1,6 @@
 /*
- *
  * App constants
  * used to tell reducer which unique action was chosen
- *
  */
 
 export const CHANGE_SIZE  = 'client/App/CHANGE_SIZE'

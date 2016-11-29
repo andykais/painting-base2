@@ -3,7 +3,6 @@
  * updates state upon action triggers
  */
 
-
 import { fromJS } from 'immutable'
 
 import { generateString, percentToString } from '~/libs/transformations'
@@ -15,12 +14,12 @@ import {
 } from './constants'
 
 const initialState = fromJS({
-  width: 100, // canvas width
-  height: 100, // canvas height
-  percent: 0.50, // default percent for widget
-  binStr: '', // binary string representing image
-  canvasData: [], // image pixel values that really are image
-  percentChanged: false // boolean to tell canvas when to update
+  width: 100, /* canvas width */
+  height: 100, /* canvas height */
+  percent: 0.50, /* default percent for widget */
+  binStr: '', /* binary string representing image */
+  canvasData: [], /* image pixel values that really are image */
+  percentChanged: false /* boolean to tell canvas when to update */
 })
 
 let generatePageReducer = (state = initialState, action) => {
@@ -49,7 +48,4 @@ let generatePageReducer = (state = initialState, action) => {
   }
 }
 
-
 export default generatePageReducer
-
-

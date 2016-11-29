@@ -38,12 +38,16 @@ const canvasToString = (canvasData) => {
 }
 
 /* convert binary string to base 10 string */
-const stringToNumber = (bin) => {
+const stringToNumber = (str) => {
   let num = '';
-  for (let i = 0; i < bin.length; i += 8) {
-    let str = parseInt(bin.substring(0, 8)).toString(10);
-    num += strFill(8-str.length) + str;
-    bin = bin.substring(8, bin.length);
+  for (let i = 0; i < str.length; i += 24) {
+    let s1 = parseInt(str.substring(i, i+24), 2).toString(10);
+    if (s1.length == 8 && i > 0) {
+      let n = parseInt(num.substring(num.length-7, num.length), 10) + 1;
+      num = num.substring(0, num.length-7) + n.toString(10).substring(0, 7);
+    }
+    s1 = s1.substring(0, 7);
+    num += strFill(7-s1.length, '0') + s1;
   }
   return num;
 }
@@ -144,7 +148,9 @@ const moveToPercent = (percent, size) => {
     return strFill(size*24, '1');
   }
   let str = percent.toString(2);
-  return str + strFill(size*24-str.length, '0');//generateRandomString(size*24 - str.length);
+  str = str.substring(2, 26);
+  str += strFill(24-str.length, '0');
+  return strFill(size*24, str);
 }
 
 /* increment/decrement by a small number (< MAXINT) */
@@ -164,6 +170,7 @@ const decrementByNum = (num, str) => {
 module.exports = {
   stringToCanvas: stringToCanvas,
   canvasToString: canvasToString,
+  stringToNumber: stringToNumber,
   generateRandomString: generateRandomString,
   moveToPercent: moveToPercent,
   incrementByNum: incrementByNum

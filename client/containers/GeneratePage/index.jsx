@@ -7,7 +7,7 @@ import {connect} from 'react-redux'
 
 import Canvas from '~/components/Canvas/index.jsx'
 import Increment from '~/components/Increment/index.jsx'
-
+import ImageNumber from '~/components/ImageNumber/index.jsx'
 
 const Generate = (props) => {
   const width = props.width
@@ -21,11 +21,13 @@ const Generate = (props) => {
         percent={props.percent}
         percentChanged={props.percentChanged}
         doneChangingPercent={props.doneChangingPercent}
-        binStr={props.binStr}/>
+        binStr={props.binStr}
+      />
       <Increment
         percentage={props.percent}
         incrementImage={props.changePercentage}
       />
+      <ImageNumber/>
     </div>
   )
 }
