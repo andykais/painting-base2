@@ -1,5 +1,5 @@
 /*
- * iage number component
+ * image number component
  * options to display or download text file containing number
  */
 
