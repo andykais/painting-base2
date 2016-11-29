@@ -6,6 +6,8 @@
 import React from 'react'
 import { Link } from 'react-router'
 
+import { numberToString } from '~/libs/transformations'
+
 const ChooseSize = (props) => {
   return (
     <div>
@@ -16,18 +18,18 @@ const ChooseSize = (props) => {
           width: parseInt(e.target.value)
         })
       }/>
-    <label htmlFor='height'>height</label>
-    <input name='height' type='number' value={props.height} onChange={
-      (e) => props.onChange({
-        height: parseInt(e.target.value)
-      })
-    }/>
-  <Link to='generate'>
-    <button onClick={() => props.generateRandom()}>
-      Generate Image
-    </button>
-  </Link>
-</div>
+      <label htmlFor='height'>height</label>
+      <input name='height' type='number' value={props.height} onChange={
+        (e) => props.onChange({
+          height: parseInt(e.target.value)
+        })
+      }/>
+      <Link to='generate'>
+        <button onClick={() => props.generateRandom()}>
+          Generate Image
+        </button>
+      </Link>
+    </div>
   )
 }
 

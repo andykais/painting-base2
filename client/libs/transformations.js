@@ -49,14 +49,26 @@ const stringToNumber = (str) => {
   let num = '';
   for (let i = 0; i < str.length; i += 24) {
     let s1 = parseInt(str.substring(i, i+24), 2).toString(10);
-    if (s1.length == 8 && i > 0) {
-      let n = parseInt(num.substring(num.length-7, num.length), 10) + 1;
-      num = num.substring(0, num.length-7) + n.toString(10).substring(0, 7);
-    }
-    s1 = s1.substring(0, 7);
-    num += strFill(7-s1.length, '0') + s1;
+    num += strFill(8-s1.length, '0') + s1;
   }
   return num;
+}
+
+/* convert base 10 string to binary string */
+const numberToString = (num) => {
+  let str = '';
+  if (num.length%8 != 0) {
+    num = strFill(8-num.length%8, '0') + num;
+  }
+  for (let i = 0; i < num.length; i += 8) {
+    let s1 = parseInt(num.substring(i, i+8)).toString(2);
+    if (s1.length == 25) {
+      str = addBin(str, '1');
+      s1 = s1.substring(1, 25);
+    }
+    str += strFill(24-s1.length, '0') + s1;
+  }
+  return str;
 }
 
 /* ------------------------------------------------------------- */
@@ -67,6 +79,9 @@ const stringToNumber = (str) => {
 const addBin = (s1, s2) => {
   if (s1.length < s2.length) {
     return addBin(s2, s1);
+  }
+  if (s2 == '') {
+    return s1;
   }
 
   s1 = '0' + s1;
@@ -95,6 +110,9 @@ const addBin = (s1, s2) => {
 const subBin = (s1, s2) => {
   if (s1.length < s2.length) {
     return subBin(s2, s1);
+  }
+  if (s2 == '') {
+    return s1;
   }
 
   s2 = strFill(s1.length-s2.length, '0') + s2;
@@ -180,6 +198,7 @@ module.exports = {
   stringToCanvas: stringToCanvas,
   canvasToString: canvasToString,
   stringToNumber: stringToNumber,
+  numberToString: numberToString,
   generateRandomString: generateRandomString,
   moveToPercent: moveToPercent,
   incrementByNumber: incrementByNumber
