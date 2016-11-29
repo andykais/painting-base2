@@ -40,11 +40,13 @@ let appReducer = (state = initialState, action) => {
       })
     case SET_CANVASDATA:
       console.log('heere?')
+      canvasData = action.canvasData
       return fromJS({
         ...oldState,
-        canvasData: action.canvasData,
-        width: action.canvasData.width,
-        height: action.canvasData.height,
+        canvasData: canvasData,
+        width: canvasData.width,
+        height: canvasData.height,
+        binStr: canvasToString(canvasData.data),
         shouldRenderCanvas: true,
       })
     case GENERATE_RANDOM_CANVASDATA:
@@ -60,6 +62,7 @@ let appReducer = (state = initialState, action) => {
       return fromJS({
         ...oldState,
         canvasData: canvasData,
+        binStr: canvasToString(canvasData.data),
         shouldRenderCanvas: true
       })
     case INC_IMG_BY_PERCENT:
@@ -68,7 +71,7 @@ let appReducer = (state = initialState, action) => {
          * it's best to keep an original image string
          * so decrementing can return the original image instead of random
          */
-      str = moveToPercent(canvasToString(canvasData.data), action.percent)
+      str = moveToPercent(oldState.binStr, action.percent)
       stringToCanvas(str, canvasData.data)
       return fromJS({
         ...oldState,
@@ -81,7 +84,7 @@ let appReducer = (state = initialState, action) => {
          * it's best to keep an original image string
          * so decrementing can return the original image instead of random
          */
-      str = incrementByNumber(canvasToString(canvasData.data), parseInt(action.number))
+      str = incrementByNumber(oldState.binStr, parseInt(action.number))
       stringToCanvas(str, canvasData.data)
       return fromJS({
         ...oldState,

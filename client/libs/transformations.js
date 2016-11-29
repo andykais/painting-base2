@@ -171,9 +171,9 @@ const moveToPercent = (str, percent) => {
   percent = Math.floor(str.length*2*Math.abs(percent-0.5));
 
   if (black) {
-    str = strFill(percent, '0') + generateRandomString(str.length-percent);
+    str = strFill(percent, '0') + str.substring(percent, str.length);
   } else {
-    str = generateRandomString(str.length-percent) + strFill(percent, '1');
+    str = str.substring(0, str.length-percent) + strFill(percent, '1');
   }
   return str;
 }
