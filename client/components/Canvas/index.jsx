@@ -12,11 +12,11 @@ class Canvas extends React.Component {
   /* update canvas by generating random image or incrementing image */
   updateCanvas() {
     let ctx = this.canvas.getContext('2d')
-    let canvasData = ctx.getImageData(0, 0, this.canvas.width, this.canvas.height)
+    let canvasData = ctx.getImageData(0, 0, this.props.width, this.props.height)
 
     /* increment by a percentage */
     if (this.props.percentChanged) {
-      let str = moveToPercent(this.props.percent, canvasData.data.length/4)
+      let str /*this.props.canvasString*/ = moveToPercent(this.props.percent, canvasToString(canvasData.data)/*this.props.canvasString*/)
       stringToCanvas(str, canvasData.data)
       this.props.doneChangingPercent()
     } /* increment by an integer */
@@ -28,6 +28,7 @@ class Canvas extends React.Component {
       // let str = generateRandomString(canvasData.data.length*6)
       // stringToCanvas(str, canvasData.data)
     }
+    // stringToCanvas(this.props.canvasString, canvasData.data)
     ctx.putImageData(canvasData, 0, 0)
   }
 

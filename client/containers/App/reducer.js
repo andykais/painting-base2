@@ -8,9 +8,9 @@ import { fromJS } from 'immutable'
 import { generateString, percentToString } from '~/libs/transformations'
 import {
   CHANGE_SIZE,
-    CHANGE_STRING,
-    CHANGE_PERCENT,
-    PERCENT_CHANGED,
+  CHANGE_STRING,
+  CHANGE_PERCENT,
+  PERCENT_CHANGED,
 } from './constants'
 
 const initialState = fromJS({

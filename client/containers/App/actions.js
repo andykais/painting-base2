@@ -5,9 +5,9 @@
 
 import {
   CHANGE_SIZE,
-    CHANGE_PERCENT,
-    PERCENT_CHANGED,
-    CHANGE_STRING,
+  CHANGE_PERCENT,
+  PERCENT_CHANGED,
+  CHANGE_STRING,
 } from './constants'
 
 export function generateRandom() {

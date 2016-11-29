@@ -141,16 +141,18 @@ const strFill = (n, fill) => {
 }
 
 /* move to new percentage point */
-const moveToPercent = (percent, size) => {
-  if (percent == 0) {
-    return strFill(size*24, '0');
-  } else if (percent == 1) {
-    return strFill(size*24, '1');
+const moveToPercent = (percent, str) => {
+  let black = (percent < 0.5);
+  percent = Math.floor(str.length*2*Math.abs(percent-0.5));
+
+  if (black) {
+    return strFill(percent, '0') + generateRandomString(str.length-percent) /*str.substring(percent, str.length);*/;
+  } else {
+    return generateRandomString(str.length-percent) /*str.substring(0, str.length-percent)*/ + strFill(percent, '1');
   }
-  let str = percent.toString(2);
-  str = str.substring(2, 26);
-  str += strFill(24-str.length, '0');
-  return strFill(size*24, str);
+
+  // black and white
+  // move through 16 different alpha's for each pixel
 }
 
 /* increment/decrement by a small number (< MAXINT) */
@@ -160,12 +162,11 @@ const incrementByNum = (num, str) => {
   }
   return addBin(str, num.toString(2));
 }
+
+/* decrement by a small number */
 const decrementByNum = (num, str) => {
   return subBin(str, num.toString(2));
 }
-
-/* ------------------------------------------------------------- */
-/* ------------------------------------------------------------- */
 
 module.exports = {
   stringToCanvas: stringToCanvas,
@@ -175,92 +176,3 @@ module.exports = {
   moveToPercent: moveToPercent,
   incrementByNum: incrementByNum
 }
-
-/* ------------------------------------------------------------- */
-/* ------------------------------------------------------------- */
-
-/* iterate over canvas and set each pixel as random */
-// const generatePixels = (canvasData) => {
-//   for (let i = 0; i < canvasData.length; i++) {
-//     if (i%4 == 3) {
-//       canvasData[i] = 255;
-//     } else {
-//       canvasData[i] = Math.floor(Math.random() * 256);
-//     }
-//   }
-// }
-// const stringToCanvas = (binStr, canvasData) => {
-// //increment like binary
-// let strPos = 0
-// let imgPos = 0
-// //const printTill = 5
-// while (strPos < binStr.length && imgPos < canvasData.length) {
-//   //let twoFiveSix = parseInt(binStr.substr(strPos, strPos+8), 2)
-//   if (imgPos % 4 == 3) {
-//     canvasData[imgPos] = 255
-//   }
-//   else {
-//     let num = 0
-//     for (var i =  strPos; i < strPos + 8; ++i) {
-//       let bit = binStr[i] === '1' ? 1 : 0
-//       num = num + bit
-//       num = num * 2
-//     }
-//     const twoFiveSix = num
-//     //const twoFiveSix = 100
-//     canvasData[imgPos] = twoFiveSix
-//     //if (imgPos < printTill) {
-//     //console.log('pos:', imgPos, 'inserting:',twoFiveSix)
-//     //}
-//     strPos += 8
-//   }
-//   imgPos ++
-// }
-// }
-// const getRandomByte = () => {
-//   return Math.floor(Math.random() * 2) === 1 ? '1' : '0'
-// }
-// const generateString = (width, height) => {
-//   const size = width * height * 8 * 256
-//   var str = ''
-//   for (let i = 0; i < size; ++i) {
-//     str += (getRandomByte())
-//   }
-//   return str
-// }
-//=======
-//const binBoolToInt = (str) => {
-//let num = 0
-//for (var i = 0; i<str.length; i++) {
-//num = num + parseInt(str[i])
-//num = num * 2
-//}
-//return num / 2
-//}
-//const getRandomByte = () => {
-//return Math.floor(Math.random() * 2) === 1 ? true : false
-//}
-//const getRandomByteArray = (N) => {
-//var arr = new Array(N)
-//for (var i=0; i<N; i++) {
-//arr[i] = getRandomByte()
-////arr.push(getRandomByte())
-//}
-//return arr
-////return Array.apply(null, {length: N}).map(Function.call, getRandomByte)
-////return Array.apply(null, {length: N}).map(1)
-//}
-//console.log('str:', strPos, 'img:', imgPos)
-//for (var i=0; i < canvasData.data.length; i+= 4 ) {
-//canvasData.data[i] = Math.floor(Math.random() * 256)
-//canvasData.data[i+1] = Math.floor(Math.random() * 256)
-//canvasData.data[i+2] = Math.floor(Math.random() * 256)
-//canvasData.data[i+3] = 255
-//}
-//return canvasData
-//}
-//module.exports = {
-//randomByteArray: getRandomByteArray,
-//generatePixels: generatePixels
-//>>>>>>> master
-//}
