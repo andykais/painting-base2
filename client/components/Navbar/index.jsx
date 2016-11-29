@@ -4,6 +4,7 @@
 
 import React from 'react'
 import {Link} from 'react-router'
+import './index.scss' // import styles
 
 const Navbar = (props) => (
   <header>

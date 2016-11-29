@@ -8,6 +8,8 @@ import React from 'react'
 
 import {stringToCanvas, incrementByPercent} from '~/libs/transformations'
 
+import './index.scss' // import styles
+
 let shouldGenerate = (canvasData, width, height) => {
   if (!canvasData.data) return true
   if (canvasData.data.length != width * height * 4) return true
