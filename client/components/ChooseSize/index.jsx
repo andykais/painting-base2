@@ -1,9 +1,10 @@
-  /* 
-   * size component
-   * changes width and height for image
-   */
+/*
+ * size component
+ * changes width and height for image
+ */
 
 import React from 'react'
+import { Link } from 'react-router'
 
 const ChooseSize = (props) => {
   return (
@@ -15,16 +16,18 @@ const ChooseSize = (props) => {
           width: parseInt(e.target.value)
         })
       }/>
-      <label htmlFor='height'>height</label>
-      <input name='height' type='number' value={props.height} onChange={
-        (e) => props.onChange({
-          height: parseInt(e.target.value)
-        })
-      }/>
+    <label htmlFor='height'>height</label>
+    <input name='height' type='number' value={props.height} onChange={
+      (e) => props.onChange({
+        height: parseInt(e.target.value)
+      })
+    }/>
+  <Link to='generate'>
     <button onClick={() => props.generateRandom()}>
-      {props.children}
+      Generate Image
     </button>
-  </div>
+  </Link>
+</div>
   )
 }
 

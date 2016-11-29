@@ -18,9 +18,7 @@ const HomePage = (props) => (
       height={props.height}
       onChange={(sideLength) => props.changeSide(sideLength)}
       generateRandom={props.generateRandomCanvasData}
-    >
-      <Link to='generate'>Generate Image</Link>
-    </ChooseSize>
+    />
     <p> OR </p>
     <Upload setImageData={props.setImageData}/>
   </div>
