@@ -20,7 +20,7 @@ const stringToCanvas = (str, canvasData) => {
 
   let i = 0;
   let j = 0;
-  while (i < str.length) {
+  while (i <= str.length) {
     if (j%4 == 3) {
       canvasData[j] = 255;
     } else {
@@ -34,7 +34,7 @@ const stringToCanvas = (str, canvasData) => {
 /* convert canvas to string of binary values */
 const canvasToString = (canvasData) => {
   let str = '';
-  for (let i = 0; i < canvasData.length; i++) {
+  for (let i = 0; i < canvasData.length-1; i++) {
     if (i%4 == 3) {
       continue;
     }
@@ -132,19 +132,15 @@ const generateRandomString = (size) => {
 
 /* return string of fill of length n */
 const strFill = (n, fill) => {
-  if (n < 1) {
-    return '';
-  }
-
   let s = '';
-  while (n > 1) {
+  while (n >= 1) {
     if (n & 1) {
       s += fill;
     }
     n >>= 1;
     fill += fill;
   }
-  return s + fill;
+  return s;
 }
 
 /* ------------------------------------------------------------- */
@@ -152,32 +148,31 @@ const strFill = (n, fill) => {
 /* ------------------------------------------------------------- */
 
 /* move to new percentage point */
-const moveToPercent = (canvasData, percent) => {
-  let str = canvasToString(canvasData);
+const moveToPercent = (str, percent) => {
   let black = (percent < 0.5);
   percent = Math.floor(str.length*2*Math.abs(percent-0.5));
 
   if (black) {
-    str = strFill(percent, '0') + generateRandomString(str.length-percent) /*str.substring(percent, str.length);*/;
+    str = strFill(percent, '0') + generateRandomString(str.length-percent);
   } else {
-    str = generateRandomString(str.length-percent) /*str.substring(0, str.length-percent)*/ + strFill(percent, '1');
+    str = generateRandomString(str.length-percent) + strFill(percent, '1');
   }
-  stringToCanvas(str, canvasData);
+  return str;
 }
 
 /* increment/decrement by a small number (< MAXINT) */
-const incrementByNum = (canvasData, num) => {
-  let str = canvasToString(canvasData);
+const incrementByNumber = (str, num) => {
   if (num < 0) {
-    str = decrementByNum(-1*num, str);
+    return decrementByNumber(-1*num, str);
   }
   str = addBin(str, num.toString(2));
-  stringToCanvas(str, canvasData);
+  return str.substring(1, str.length);
 }
 
 /* decrement by a small number */
-const decrementByNum = (num, str) => {
-  return subBin(str, num.toString(2));
+const decrementByNumber = (num, str) => {
+  str = subBin(str, num.toString(2));
+  return str.substring(1, str.length);
 }
 
 module.exports = {
@@ -187,5 +182,5 @@ module.exports = {
   stringToNumber: stringToNumber,
   generateRandomString: generateRandomString,
   moveToPercent: moveToPercent,
-  incrementByNum: incrementByNum
+  incrementByNumber: incrementByNumber
 }

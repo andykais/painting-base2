@@ -13,7 +13,7 @@ class ImageNumber extends React.Component {
     let str = 'Please upload or generate an image'
     if (canvas) {
       let canvasData = canvas.getContext('2d').getImageData(0, 0, canvas.width, canvas.height)
-      str = stringToNumber(canvasToString(canvasData.data))//stringToNumber(canvasToString(canvasData.data))
+      str = stringToNumber(canvasToString(canvasData.data))
     }
     return str
   }

@@ -6,7 +6,7 @@
 import { fromJS } from 'immutable'
 import { combineReducers } from 'redux-immutable'
 
-import { moveToPercent, incrementByNumber, blankOutCanvas, generatePixels } from '~/libs/transformations'
+import { moveToPercent, incrementByNumber, blankOutCanvas, generateRandomString, stringToCanvas, canvasToString } from '~/libs/transformations'
 import {
   CHANGE_SIZE,
   SET_CANVASDATA,
@@ -31,6 +31,7 @@ const initialState = fromJS({
 let appReducer = (state = initialState, action) => {
   const oldState = state.toJS()
   let canvasData
+  let str
   switch(action.type) {
     case SET_SHOULD_RENDER_TO_FALSE:
       return fromJS({
@@ -54,7 +55,7 @@ let appReducer = (state = initialState, action) => {
         var ctx = canvas.getContext('2d')
         canvasData = ctx.createImageData(oldState.width, oldState.height)
       }
-      generatePixels(canvasData.data)
+      stringToCanvas(generateRandomString(canvasData.data.length*6), canvasData.data)
       return fromJS({
         ...oldState,
         canvasData: canvasData,
@@ -62,8 +63,12 @@ let appReducer = (state = initialState, action) => {
       })
     case INC_IMG_BY_PERCENT:
       canvasData = oldState.canvasData
-      //blankOutCanvas(canvasData.data)
-      moveToPercent(canvasData.data, action.percent)
+      /* instead of passing canvasToString(canvasData.data)
+       * it's best to keep an original image string
+       * so decrementing can return the original image instead of random
+       */
+      str = moveToPercent(canvasToString(canvasData.data), action.percent)
+      stringToCanvas(str, canvasData.data)
       return fromJS({
         ...oldState,
         canvasData: canvasData,
@@ -71,7 +76,12 @@ let appReducer = (state = initialState, action) => {
       })
     case INC_IMG_BY_NUMBER:
       canvasData = oldState.canvasData
-      incrementByNumber(canvasData.data, action.number)
+      /* instead of passing canvasToString(canvasData.data)
+       * it's best to keep an original image string
+       * so decrementing can return the original image instead of random
+       */
+      str = incrementByNumber(canvasToString(canvasData.data), parseInt(action.number))
+      stringToCanvas(str, canvasData.data)
       return fromJS({
         ...oldState,
         canvasData: canvasData,
