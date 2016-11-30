@@ -49,7 +49,10 @@ const App = (props) => {
 
   return (
     <div id='app-container'>
-      <Navbar tellCanvasToUpdate={props.tellCanvasToUpdate}/>
+      <Navbar 
+        tellCanvasToUpdate={props.tellCanvasToUpdate}
+        canvasData={props.canvasData}
+        shouldRenderCanvas={props.shouldRenderCanvas}/>
       <div className='app-content'>
         {childrenWithProps}
       </div>

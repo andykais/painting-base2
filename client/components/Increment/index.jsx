@@ -4,7 +4,7 @@
  */
 
 import React from 'react'
-import './index.scss' // import styles
+import './styles.scss' // import styles
 
 const min = 0
 const max = 1000

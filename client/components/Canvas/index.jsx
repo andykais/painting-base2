@@ -6,7 +6,7 @@
 
 import React from 'react'
 
-import './index.scss'
+import './styles.scss'
 
 let shouldGenerate = (canvasData, width, height) => {
   if (!canvasData.data) return true

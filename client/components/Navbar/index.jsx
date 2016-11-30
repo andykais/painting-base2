@@ -4,18 +4,27 @@
 
 import React from 'react'
 import {Link} from 'react-router'
-import './index.scss' // import styles
+
+import ImageNumber from '~/components/ImageNumber/index.jsx'
+import NavLink from '~/components/NavLink/index.jsx'
+import './styles.scss' // import styles
 
 const Navbar = (props) => (
   <header>
     <ul>
-      <li><Link to='/'>Home</Link></li>
-      <li><Link
-          to='/generate'
-          onClick={props.tellCanvasToUpdate}>
-          Generate
-      </Link></li>
-      <li><Link to='/about'>About</Link></li>
+      <li><NavLink to='/'>Home</NavLink></li>
+      <li><NavLink to='/about'>About</NavLink></li>
+      <div className='pushRight'>
+        <li><NavLink
+            to='/generate'
+            onClick={props.tellCanvasToUpdate}>
+            Image
+        </NavLink></li>
+        <li><ImageNumber
+            canvasData={props.canvasData}
+            updateNumber={props.shouldRenderCanvas}/>
+        </li>
+      </div>
     </ul>
   </header>
 )
