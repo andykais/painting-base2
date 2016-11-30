@@ -13,9 +13,16 @@ const Navbar = (props) => (
       <li><Link
           to='/generate'
           onClick={props.tellCanvasToUpdate}>
-          Generate
+          Number
       </Link></li>
       <li><Link to='/about'>About</Link></li>
+      <li><Link
+          to='/generate'
+          onClick={props.tellCanvasToUpdate}>
+          Generate
+      </Link></li>
+
+
     </ul>
   </header>
 )
