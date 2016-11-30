@@ -15,6 +15,18 @@ let shouldGenerate = (canvasData, width, height) => {
 }
 
 class Canvas extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      width: this.props.width,
+      zoom: 1
+    }
+  }
+  applyZoom(percentZoom) {
+    let newWidth = this.state.width * percentZoom
+    this.setState({ width: newWidth })
+    this.canvas.style.cssText = `width: ${newWidth}px`
+  }
   /* update canvas by generating random image or incrementing image */
   updateCanvas() {
     let width = this.canvas.width
@@ -56,6 +68,16 @@ class Canvas extends React.Component {
           }
           id='canvas'
         ></canvas>
+        <div>
+          <button
+            onClick={() => this.applyZoom(2)}>
+            +
+          </button>
+          <button
+            onClick={() => this.applyZoom(0.5)}>
+            -
+          </button>
+        </div>
       </div>
     )
   }
