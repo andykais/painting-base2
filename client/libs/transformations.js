@@ -9,37 +9,62 @@ const blankOutCanvas = (canvasData) => {
   })
 }
 
-/* put binary string in canvas */
+/* put binary string in canvas (b/w) */
 const stringToCanvas = (str, canvasData) => {
-  let size = canvasData.length*6;
-  if (str.length <= size) {
+  let size = canvasData.length/4;
+  if (str.length < size) {
     str = strFill(size-str.length, '0') + str;
   } else {
     str = str.substring(str.length - size, str.length);
   }
 
-  let i = 0;
   let j = 0;
-  while (i <= str.length) {
-    if (j%4 == 3) {
+  for (let i = 0; i < str.length; i++) {
+    if (str[i] == '1') {
       canvasData[j] = 255;
+      canvasData[j+1] = 255;
+      canvasData[j+2] = 255;
     } else {
-      canvasData[j] = parseInt(str.substring(i, i+8), 2);
-      i += 8;
+      canvasData[j] = 0;
+      canvasData[j+1] = 0;
+      canvasData[j+2] = 0;
     }
-    j++;
+    canvasData[j+3] = 255;
+    j += 4;
   }
 }
+
+// /* put binary string in canvas */
+// const stringToCanvas = (str, canvasData) => {
+//   let size = canvasData.length*6;
+//   if (str.length <= size) {
+//     str = strFill(size-str.length, '0') + str;
+//   } else {
+//     str = str.substring(str.length - size, str.length);
+//   }
+
+//   let i = 0;
+//   let j = 0;
+//   while (i <= str.length) {
+//     if (j%4 == 3) {
+//       canvasData[j] = 255;
+//     } else {
+//       canvasData[j] = parseInt(str.substring(i, i+8), 2);
+//       i += 8;
+//     }
+//     j++;
+//   }
+// }
 
 /* convert canvas to string of binary values */
 const canvasToString = (canvasData) => {
   let str = '';
-  for (let i = 0; i < canvasData.length-1; i++) {
-    if (i%4 == 3) {
-      continue;
+  for (let i = 0; i < canvasData.length; i += 4) {
+    if (canvasData[i] == 255) {
+      str += '1';
+    } else {
+      str += '0';
     }
-    let s1 = canvasData[i].toString(2);
-    str += strFill(8-s1.length, '0') + s1;
   }
   return str;
 }
@@ -69,6 +94,19 @@ const numberToString = (num) => {
     str += strFill(24-s1.length, '0') + s1;
   }
   return str;
+}
+
+/* get percentage point of string in image space */
+const getPercent = (str) => {
+  let percent = 0;
+  let p = 0.5;
+  for (let i = 0; i < 20; i++) {
+    if (str[i] == '1') {
+      percent += p;
+    }
+    p /= 2;
+  }
+  return Math.round((percent + 0.000001) * 1000) / 1000;
 }
 
 /* ------------------------------------------------------------- */
@@ -103,7 +141,10 @@ const addBin = (s1, s2) => {
       carry = 0;
     }
   }
-  return str;
+  if (str[0] == '1') {
+    return strFill(s1.length-1, '1');
+  }
+  return str.substring(1, str.length);
 }
 
 /* binary subtraction s1-s2 */
@@ -115,7 +156,9 @@ const subBin = (s1, s2) => {
     return s1;
   }
 
+  s1 = '0' + s1;
   s2 = strFill(s1.length-s2.length, '0') + s2;
+
   let str = '';
   let carry = 0;
 
@@ -132,7 +175,10 @@ const subBin = (s1, s2) => {
       carry = 0;
     }
   }
-  return str;
+  if (str[0] == '1') {
+    return strFill(str.length-1, '0');
+  }
+  return str.substring(1, str.length);
 }
 
 /* ------------------------------------------------------------- */
@@ -165,41 +211,63 @@ const strFill = (n, fill) => {
 /*                     canvas modifications                      */
 /* ------------------------------------------------------------- */
 
-/* move to new percentage point */
+/* move to new percentage point (b/w) */
 const moveToPercent = (str, percent) => {
-  let black = (percent < 0.5);
-  percent = Math.floor(str.length*2*Math.abs(percent-0.5));
-
-  if (black) {
-    str = strFill(percent, '0') + str.substring(percent, str.length);
-  } else {
-    str = str.substring(0, str.length-percent) + strFill(percent, '1');
+  if (percent == 1) {
+    return strFill(str.length, '1');
+  } else if (percent == 0) {
+    return strFill(str.length, '0');
   }
-  return str;
+
+  percent -= getPercent(str);
+  let inc = (percent > 0);
+
+  console.log(percent);
+
+  percent = Math.abs(percent).toString(2).substring(2, 22);
+  percent += strFill(20-percent.length, '0');
+  percent = strFill(Math.floor(str.length/20), percent);
+  if (inc) {
+    str = addBin(str, percent + strFill(str.length - percent.length, '0')).substring(1, str.length);
+    console.log(str);
+    return str;
+  } else {
+    str = subBin(str, percent + strFill(str.length - percent.length, '0'));
+    console.log(str);
+    return str;
+  }
 }
+
+// /* move to new percentage point */
+// const moveToPercent = (str, percent) => {
+//   let black = (percent < 0.5);
+//   percent = Math.floor(str.length*2*Math.abs(percent-0.5));
+
+//   if (black) {
+//     str = strFill(percent, '0') + str.substring(percent, str.length);
+//   } else {
+//     str = str.substring(0, str.length-percent) + strFill(percent, '1');
+//   }
+//   return str;
+// }
 
 /* increment/decrement by a small number (< MAXINT) */
 const incrementByNumber = (str, num) => {
   if (num < 0) {
-    return decrementByNumber(-1*num, str);
+    return subBin(str, Math.abs(num).toString(2));
   }
-  str = addBin(str, num.toString(2));
-  return str.substring(1, str.length);
-}
-
-/* decrement by a small number */
-const decrementByNumber = (num, str) => {
-  str = subBin(str, num.toString(2));
-  return str.substring(1, str.length);
+  str = addBin(str, num.toString(2)).substring(1, str.length+1);
+  return str;
 }
 
 module.exports = {
-  blankOutCanvas: blankOutCanvas,
-  stringToCanvas: stringToCanvas,
-  canvasToString: canvasToString,
-  stringToNumber: stringToNumber,
-  numberToString: numberToString,
-  generateRandomString: generateRandomString,
-  moveToPercent: moveToPercent,
-  incrementByNumber: incrementByNumber
+  blankOutCanvas,
+  stringToCanvas,
+  canvasToString,
+  stringToNumber,
+  numberToString,
+  getPercent,
+  generateRandomString,
+  moveToPercent,
+  incrementByNumber
 }

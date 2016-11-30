@@ -6,7 +6,7 @@ import React from 'react'
 import {browserHistory} from 'react-router'
 
 let bOw = (color) => {
-  return color >=128 ? 255 : 0
+  return color >= 128 ? 255 : 0
 }
 
 let convertToBlackOrWhite = (imgArray) => {
@@ -19,7 +19,7 @@ let convertToBlackOrWhite = (imgArray) => {
     imgArray[i]   = flatColor
     imgArray[i+1] = flatColor
     imgArray[i+2] = flatColor
-    imgArray[i+3] = bOw(imgArray[i+3])
+    imgArray[i+3] = 255//bOw(imgArray[i+3])
     i = i + 4
   }
 }
