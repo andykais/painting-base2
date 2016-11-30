@@ -31,7 +31,6 @@ const Generate = (props) => {
         incrementByPercent={props.incImageDataByPercent}
         incrementByNumber={props.incImageDataByNumber}
       />
-      <ImageNumber/>
     </div>
   )
 }
