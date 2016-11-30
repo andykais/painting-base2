@@ -16,14 +16,12 @@ import {
     incImageDataByNumber,
     tellCanvasToUpdate,
     tellCanvasToStopUpdating,
-    changeIncrementNumber,
 } from './actions'
 
 const App = (props) => {
 
   const functionsForChildren = {
     changeSide: props.changeSide,
-    changeIncrementNumber: props.changeIncrementNumber,
     tellCanvasToUpdate: props.tellCanvasToUpdate,
     tellCanvasToStopUpdating: props.tellCanvasToStopUpdating,
     setImageData: props.setImageData,
@@ -68,7 +66,6 @@ const mapStateToProps = selectAppState()
 function mapDispatchToProps(dispatch) {
   return {
     changeSide: (side) => dispatch(changeSide(side)),
-    changeIncrementNumber: (number) => dispatch(changeIncrementNumber(number)),
     tellCanvasToUpdate: () => dispatch(tellCanvasToUpdate()),
     tellCanvasToStopUpdating: () => dispatch(tellCanvasToStopUpdating()),
     setImageData: (canvasData) => dispatch(setImageData(canvasData)),

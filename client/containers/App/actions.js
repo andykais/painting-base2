@@ -60,10 +60,3 @@ export function generateRandomCanvasData() {
     type: GENERATE_RANDOM_CANVASDATA
   }
 }
-
-export function changeIncrementNumber(number) {
-  return {
-    type: CHANGE_INCREMENT_NUMBER,
-    number: number,
-  }
-}

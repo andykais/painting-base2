@@ -15,7 +15,6 @@ import {
     INC_IMG_BY_NUMBER,
     SET_SHOULD_RENDER_TO_TRUE,
     SET_SHOULD_RENDER_TO_FALSE,
-    CHANGE_INCREMENT_NUMBER
 } from './constants'
 
 const initialState = fromJS({
@@ -95,11 +94,6 @@ let appReducer = (state = initialState, action) => {
       return fromJS({
         ...oldState,
         ...action.side
-      })
-    case CHANGE_INCREMENT_NUMBER:
-      return fromJS({
-        ...oldState,
-        incrementNumber: action.number
       })
     default:
       return state
