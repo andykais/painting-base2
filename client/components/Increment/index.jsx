@@ -21,7 +21,7 @@ class Increment extends React.Component {
     return (
       <div>
         <label htmlFor="incPercent">increment image slider</label>
-        <input name="incPercent" type="range" min={min} max={max} defaultValue={max*props.percent}
+        <input name="incPercent" type="range" min={min} max={max} defaultValue={max*this.props.percent}
           onMouseUp={(e) => {
             this.props.incrementByPercent(e.target.value / max)
           }}
