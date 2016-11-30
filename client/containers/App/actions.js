@@ -1,4 +1,4 @@
-/* 
+/*
  * main App actions
  * each action is sent to the reducer to update the state
  */
@@ -8,10 +8,17 @@ import {
     GENERATE_RANDOM_CANVASDATA,
     INC_IMG_BY_PERCENT,
     INC_IMG_BY_NUMBER,
+    SET_SHOULD_RENDER_TO_TRUE,
     SET_SHOULD_RENDER_TO_FALSE,
     CHANGE_INCREMENT_NUMBER,
     SET_CANVASDATA,
 } from './constants'
+
+export function tellCanvasToUpdate() {
+  return {
+    type: SET_SHOULD_RENDER_TO_TRUE
+  }
+}
 
 export function tellCanvasToStopUpdating() {
   return {

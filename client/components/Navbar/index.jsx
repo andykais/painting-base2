@@ -12,7 +12,7 @@ const Navbar = (props) => (
       <li><Link to='/'>Home</Link></li>
       <li><Link
           to='/generate'
-          onClick={props.generateRandomCanvasData}>
+          onClick={props.tellCanvasToUpdate}>
           Generate
       </Link></li>
       <li><Link to='/about'>About</Link></li>

@@ -36,6 +36,7 @@ class Canvas extends React.Component {
     let canvasData = this.props.canvasData
     if (!canvasData.data) {
       this.props.initImageData()
+      return
     }
     /* helper variables tell canvas when to update, because redux does not recognize changes in array */
     if (this.props.shouldUpdate) {
