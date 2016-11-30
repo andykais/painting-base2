@@ -14,15 +14,15 @@ import {
     generateRandomCanvasData,
     incImageDataByPercent,
     incImageDataByNumber,
+    tellCanvasToUpdate,
     tellCanvasToStopUpdating,
-    changeIncrementNumber,
 } from './actions'
 
 const App = (props) => {
 
   const functionsForChildren = {
     changeSide: props.changeSide,
-    changeIncrementNumber: props.changeIncrementNumber,
+    tellCanvasToUpdate: props.tellCanvasToUpdate,
     tellCanvasToStopUpdating: props.tellCanvasToStopUpdating,
     setImageData: props.setImageData,
     generateRandomCanvasData: props.generateRandomCanvasData,
@@ -49,7 +49,7 @@ const App = (props) => {
 
   return (
     <div id='app-container'>
-      <Navbar generateRandomCanvasData={props.generateRandomCanvasData}/>
+      <Navbar tellCanvasToUpdate={props.tellCanvasToUpdate}/>
       <div className='app-content'>
         {childrenWithProps}
       </div>
@@ -66,7 +66,7 @@ const mapStateToProps = selectAppState()
 function mapDispatchToProps(dispatch) {
   return {
     changeSide: (side) => dispatch(changeSide(side)),
-    changeIncrementNumber: (number) => dispatch(changeIncrementNumber(number)),
+    tellCanvasToUpdate: () => dispatch(tellCanvasToUpdate()),
     tellCanvasToStopUpdating: () => dispatch(tellCanvasToStopUpdating()),
     setImageData: (canvasData) => dispatch(setImageData(canvasData)),
     generateRandomCanvasData: () => dispatch(generateRandomCanvasData()),

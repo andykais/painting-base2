@@ -22,8 +22,8 @@ import {
     GENERATE_RANDOM_CANVASDATA,
     INC_IMG_BY_PERCENT,
     INC_IMG_BY_NUMBER,
+    SET_SHOULD_RENDER_TO_TRUE,
     SET_SHOULD_RENDER_TO_FALSE,
-    CHANGE_INCREMENT_NUMBER
 } from './constants'
 
 const initialState = fromJS({
@@ -42,6 +42,11 @@ let appReducer = (state = initialState, action) => {
   let canvasData
   let str = ''
   switch(action.type) {
+    case SET_SHOULD_RENDER_TO_TRUE:
+      return fromJS({
+        ...oldState,
+        shouldRenderCanvas: true
+      })
     case SET_SHOULD_RENDER_TO_FALSE:
       return fromJS({
         ...oldState,
@@ -62,15 +67,12 @@ let appReducer = (state = initialState, action) => {
     case GENERATE_RANDOM_CANVASDATA:
       str = oldState.binStr
       canvasData = oldState.canvasData
-      if (oldState.width !== canvasData.width || oldState.height !== canvasData.height) {
-        var canvas = document.createElement('canvas')
-        canvas.width = oldState.width
-        canvas.height = oldState.height
-        var ctx = canvas.getContext('2d')
-        canvasData = ctx.createImageData(oldState.width, oldState.height)
-        str = generateRandomString(canvasData.data.length*6)
-        stringToCanvas(str, canvasData.data)
-      }
+      var canvas = document.createElement('canvas')
+      canvas.width = oldState.width
+      canvas.height = oldState.height
+      var ctx = canvas.getContext('2d')
+      canvasData = ctx.createImageData(oldState.width, oldState.height)
+      stringToCanvas(generateRandomString(canvasData.data.length*6), canvasData.data)
       return fromJS({
         ...oldState,
         canvasData: canvasData,
@@ -102,11 +104,6 @@ let appReducer = (state = initialState, action) => {
       return fromJS({
         ...oldState,
         ...action.side
-      })
-    case CHANGE_INCREMENT_NUMBER:
-      return fromJS({
-        ...oldState,
-        incrementNumber: action.number
       })
     default:
       return state
