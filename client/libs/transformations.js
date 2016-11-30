@@ -114,7 +114,10 @@ const getPercent = (str) => {
 /* ------------------------------------------------------------- */
 
 /* binary addition s1+s2 */
-const addBin = (s1, s2) => {
+const addBin = (s1, s2, inc=true) => {
+  if (inc == false) {
+    return subBin(s1, s2);
+  }
   if (s1.length < s2.length) {
     return addBin(s2, s1);
   }
@@ -222,20 +225,10 @@ const moveToPercent = (str, percent) => {
   percent -= getPercent(str);
   let inc = (percent > 0);
 
-  console.log(percent);
-
   percent = Math.abs(percent).toString(2).substring(2, 22);
-  percent += strFill(20-percent.length, '0');
-  percent = strFill(Math.floor(str.length/20), percent);
-  if (inc) {
-    str = addBin(str, percent + strFill(str.length - percent.length, '0')).substring(1, str.length);
-    console.log(str);
-    return str;
-  } else {
-    str = subBin(str, percent + strFill(str.length - percent.length, '0'));
-    console.log(str);
-    return str;
-  }
+  percent += strFill(22-percent.length, '0');
+  percent = strFill(Math.ceil(str.length/22), percent).substring(0, str.length);
+  return addBin(str, percent, inc);
 }
 
 // /* move to new percentage point */
@@ -253,11 +246,7 @@ const moveToPercent = (str, percent) => {
 
 /* increment/decrement by a small number (< MAXINT) */
 const incrementByNumber = (str, num) => {
-  if (num < 0) {
-    return subBin(str, Math.abs(num).toString(2));
-  }
-  str = addBin(str, num.toString(2)).substring(1, str.length+1);
-  return str;
+  return addBin(str, Math.abs(num).toString(2), (num < 0));
 }
 
 module.exports = {

@@ -72,7 +72,8 @@ let appReducer = (state = initialState, action) => {
       canvas.height = oldState.height
       var ctx = canvas.getContext('2d')
       canvasData = ctx.createImageData(oldState.width, oldState.height)
-      stringToCanvas(generateRandomString(canvasData.data.length*6), canvasData.data)
+      str = generateRandomString(canvasData.data.length/4)
+      stringToCanvas(str, canvasData.data)
       return fromJS({
         ...oldState,
         canvasData: canvasData,
