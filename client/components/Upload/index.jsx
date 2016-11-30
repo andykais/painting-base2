@@ -5,16 +5,21 @@
 import React from 'react'
 import {browserHistory} from 'react-router'
 
+let bOw = (color) => {
+  return color >=128 ? 255 : 0
+}
+
 let convertToBlackOrWhite = (imgArray) => {
   var i = 0
   while (i < imgArray.length) {
     // ( R + G + B ) / 2
     var avg = 0.299*imgArray[i] + 0.587*imgArray[i+1] + 0.114*imgArray[i+2]
     //var avg = ( imgArray[i] + imgArray[i+1] + imgArray[i+2] ) / 3
-    var bOw = avg >= 128 ? 255 : 0
-    imgArray[i] = bOw
-    imgArray[i+1] = bOw
-    imgArray[i+2] = bOw
+    var flatColor = bOw(avg)
+    imgArray[i]   = flatColor
+    imgArray[i+1] = flatColor
+    imgArray[i+2] = flatColor
+    imgArray[i+3] = bOw(imgArray[i+3])
     i = i + 4
   }
 }
