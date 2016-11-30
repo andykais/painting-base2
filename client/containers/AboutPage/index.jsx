@@ -1,10 +1,11 @@
-/* 
+/*
  * Page explaining image generation - pixels and binary numbers
  */
 
 import React from 'react'
 import {Link} from 'react-router'
 import ColorBlock from '~/components/colorBlock/index.jsx';
+import './styles.scss' // import styles
 
 const About = ({}) => (
   <div className="infoPage">

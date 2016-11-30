@@ -5,37 +5,24 @@
 // Variables
 $font-stack: Oswald;
 
-
+h3 {
+  font-family: Oswald;
+  font-weight: bold;
+  padding: 14px 16px;
+}
 
 p {
-  text-align: center;
   font-family: Oswald;
-  font-weight: bold;
+  padding: 14px 16px;
+
 }
 
-
-label {
-  text-align: center;
-  font-family: Oswald;
-  font-weight: bold;
+.colorBlock canvas{
   margin:auto;
   display:block;
 }
 
-label input{
+button{
   margin:auto;
   display:block;
-}
-
-a {
-  display: block;
-  margin-top: 5px;
-  text-align: center;
-}
-
-form {
-  text-align: center;
-  margin:auto;
-  display:block;
-
 }
