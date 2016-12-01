@@ -1,4 +1,15 @@
-label {
-  width: 80%;
-  margin: 0 auto;
+.bottom-bar button {
+  display: inline;
+}
+
+.bottom-bar {
+  background-color: #5680a1;
+  position: fixed;
+  display: inline;
+  bottom: 0;
+  width: 100%;
+}
+
+.bottom-bar label{
+  color: #aff000;
 }
