@@ -20,8 +20,7 @@ class Increment extends React.Component {
   render() {
     return (
       <div className="bottom-bar">
-        <label htmlFor="incPercent">Increment Image Slider
-        <input name="incPercent" type="range" min={min} max={max} defaultValue={max / 2}
+        <input name="incPercent" id="incrementSlider" type="range" min={min} max={max} defaultValue={this.props.percent*max}
           onMouseUp={(e) => {
             this.props.incrementByPercent(e.target.value / max)
           }}
@@ -29,9 +28,9 @@ class Increment extends React.Component {
             this.props.incrementByPercent(e.target.value / max)
           }}
         />
-        </label>
-        <div>
-          <label htmlFor="incNumber">Increment Image Button
+        <div id="incrementTools">
+          <div id="incrementTitle"><label>Increment Your Image</label></div>
+          <div id="incrementValue">
           <input name="incNumber" type="number" min={0} value={this.state.incrementNumber}
             onChange={(e) => {
               this.setState({
@@ -39,17 +38,15 @@ class Increment extends React.Component {
               })
             }}
           />
-
-          <button onClick={() => {
-            this.props.incrementByNumber(this.state.incrementNumber)
-          }}>Add Number</button>
           <button onClick={() => {
             this.props.incrementByNumber(this.state.incrementNumber * -1)
-          }}>Subtract Number</button>
-          </label>
+          }}>Subtract</button>
+          <button onClick={() => {
+            this.props.incrementByNumber(this.state.incrementNumber)
+          }}>Add</button>
+          </div>
+        </div>
       </div>
-    </div>
-
     )
   }
 }
