@@ -217,7 +217,7 @@ const moveToPercent = (str, percent) => {
   let inc = (change > 0);
 
   change = Math.abs(change).toString(2).substring(2, 22);
-  change += generateRandomString(str.length-change.length, percent);
+  change += generateRandomString(Math.ceil(str.length*percent), percent);
   return addBin(str, change, inc);
 }
 
