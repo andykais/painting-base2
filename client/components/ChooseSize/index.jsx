@@ -8,22 +8,26 @@ import { Link } from 'react-router'
 
 import { numberToString } from '~/libs/transformations'
 
+import './styles.scss' // import styles
+
 const ChooseSize = (props) => {
   return (
     <div>
-      <p>pick image size</p>
-      <label htmlFor='width'>width</label>
+      <p>Choose an Image Size</p>
+      <label htmlFor='width'>Width  
       <input name='width' type='number' value={props.width} onChange={
         (e) => props.onChange({
           width: parseInt(e.target.value)
         })
       }/>
-      <label htmlFor='height'>height</label>
+      </label>
+      <label htmlFor='height'>Height
       <input name='height' type='number' value={props.height} onChange={
         (e) => props.onChange({
           height: parseInt(e.target.value)
         })
       }/>
+      </label>
       <Link to='generate'>
         <button onClick={() => props.generateRandom()}>
           Generate Image

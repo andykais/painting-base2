@@ -69,15 +69,16 @@ class Canvas extends React.Component {
           }
           id='canvas'
         ></canvas>
-        <div>
-          <button
-            onClick={() => this.applyZoom(2)}>
-            +
-          </button>
+        <div className="size-buttons">
           <button
             onClick={() => this.applyZoom(0.5)}>
-            -
+            Decrease Canvas Size
           </button>
+          <button
+            onClick={() => this.applyZoom(2)}>
+            Increase Canvas Size
+          </button>
+
         </div>
       </div>
     )

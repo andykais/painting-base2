@@ -1,0 +1,28 @@
+// Google Fonts
+@import url(https://fonts.googleapis.com/css?family=Oswald);
+
+// Font Variables
+// Variables
+$font-stack: Oswald;
+
+h3 {
+  font-family: Oswald;
+  font-weight: bold;
+  padding: 14px 16px;
+}
+
+p {
+  font-family: Oswald;
+  padding: 14px 16px;
+
+}
+
+.colorBlock canvas{
+  margin:auto;
+  display:block;
+}
+
+button{
+  margin:auto;
+  display:block;
+}

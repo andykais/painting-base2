@@ -10,6 +10,8 @@ import Increment from '~/components/Increment/index.jsx'
 import ImageNumber from '~/components/ImageNumber/index.jsx'
 import Upload from '~/components/Upload/index.jsx'
 
+import './styles.scss' // import styles
+
 const Generate = (props) => {
 
   // store values from App

@@ -9,7 +9,7 @@ const blankOutCanvas = (canvasData) => {
   })
 }
 
-/* put binary string in canvas (b/w) */
+/* put binary string in canvas */
 const stringToCanvas = (str, canvasData) => {
   let size = canvasData.length/4;
   if (str.length < size) {
@@ -34,28 +34,6 @@ const stringToCanvas = (str, canvasData) => {
   }
 }
 
-// /* put binary string in canvas */
-// const stringToCanvas = (str, canvasData) => {
-//   let size = canvasData.length*6;
-//   if (str.length <= size) {
-//     str = strFill(size-str.length, '0') + str;
-//   } else {
-//     str = str.substring(str.length - size, str.length);
-//   }
-
-//   let i = 0;
-//   let j = 0;
-//   while (i <= str.length) {
-//     if (j%4 == 3) {
-//       canvasData[j] = 255;
-//     } else {
-//       canvasData[j] = parseInt(str.substring(i, i+8), 2);
-//       i += 8;
-//     }
-//     j++;
-//   }
-// }
-
 /* convert canvas to string of binary values */
 const canvasToString = (canvasData) => {
   let str = '';
@@ -72,9 +50,18 @@ const canvasToString = (canvasData) => {
 /* convert binary string to base 10 string */
 const stringToNumber = (str) => {
   let num = '';
-  for (let i = 0; i < str.length; i += 24) {
-    let s1 = parseInt(str.substring(i, i+24), 2).toString(10);
-    num += strFill(8-s1.length, '0') + s1;
+  if (str.length%4 != 0) {
+    str = strFill(4-str.length%4, '0') + str;
+  }
+  for (let i = 0; i < str.length; i += 4) {
+    let s1 = str.substring(i, i+4);
+    if (s1 == '1110') {
+      num += '8';
+    } else if (s1 == '1111') {
+      num += '9';
+    } else {
+      num += parseInt(s1, 2).toString(10);
+    }
   }
   return num;
 }
@@ -82,16 +69,16 @@ const stringToNumber = (str) => {
 /* convert base 10 string to binary string */
 const numberToString = (num) => {
   let str = '';
-  if (num.length%8 != 0) {
-    num = strFill(8-num.length%8, '0') + num;
-  }
-  for (let i = 0; i < num.length; i += 8) {
-    let s1 = parseInt(num.substring(i, i+8)).toString(2);
-    if (s1.length == 25) {
-      str = addBin(str, '1');
-      s1 = s1.substring(1, 25);
+  for (let i = 0; i < num.length; i++) {
+    let s1 = parseInt(num[i]);
+    if (s1 == 8) {
+      str += '1110';
+    } else if (s1 == 9) {
+      str += '1111';
+    } else {
+      s1 = s1.toString(2);
+      str += strFill(4-s1.length, '0') + s1;
     }
-    str += strFill(24-s1.length, '0') + s1;
   }
   return str;
 }
@@ -189,10 +176,14 @@ const subBin = (s1, s2) => {
 /* ------------------------------------------------------------- */
 
 /* generate random binary string */
-const generateRandomString = (size) => {
+const generateRandomString = (size, prob=0.5) => {
   let str = '';
   for (; size > 0; size--) {
-    str += Math.round(Math.random()).toString(2);
+    if (Math.random() >= prob) {
+      str += '1';
+    } else {
+      str += '0';
+    }
   }
   return str;
 }
@@ -214,7 +205,7 @@ const strFill = (n, fill) => {
 /*                     canvas modifications                      */
 /* ------------------------------------------------------------- */
 
-/* move to new percentage point (b/w) */
+/* move to new percentage point */
 const moveToPercent = (str, percent) => {
   if (percent == 1) {
     return strFill(str.length, '1');
@@ -222,27 +213,13 @@ const moveToPercent = (str, percent) => {
     return strFill(str.length, '0');
   }
 
-  percent -= getPercent(str);
-  let inc = (percent > 0);
+  let change = percent - getPercent(str);
+  let inc = (change > 0);
 
-  percent = Math.abs(percent).toString(2).substring(2, 22);
-  percent += strFill(22-percent.length, '0');
-  percent = strFill(Math.ceil(str.length/22), percent).substring(0, str.length);
-  return addBin(str, percent, inc);
+  change = Math.abs(change).toString(2).substring(2, 22);
+  change += generateRandomString(str.length-change.length, percent);
+  return addBin(str, change, inc);
 }
-
-// /* move to new percentage point */
-// const moveToPercent = (str, percent) => {
-//   let black = (percent < 0.5);
-//   percent = Math.floor(str.length*2*Math.abs(percent-0.5));
-
-//   if (black) {
-//     str = strFill(percent, '0') + str.substring(percent, str.length);
-//   } else {
-//     str = str.substring(0, str.length-percent) + strFill(percent, '1');
-//   }
-//   return str;
-// }
 
 /* increment/decrement by a small number (< MAXINT) */
 const incrementByNumber = (str, num) => {
