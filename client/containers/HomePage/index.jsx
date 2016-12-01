@@ -19,7 +19,7 @@ const HomePage = (props) => (
       onChange={(sideLength) => props.changeSide(sideLength)}
       generateRandom={props.generateRandomCanvasData}
     />
-    <p> OR </p>
+    <p> OR <br></br> Upload an Image or a Number File </p>
     <Upload setImageData={props.setImageData}/>
   </div>
 )

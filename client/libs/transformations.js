@@ -13,7 +13,7 @@ const blankOutCanvas = (canvasData) => {
 const stringToCanvas = (str, canvasData) => {
   let size = canvasData.length/4;
   if (str.length < size) {
-    str = strFill(size-str.length, '0') + str;
+    str += strFill(size-str.length, '0');
   } else {
     str = str.substring(str.length - size, str.length);
   }
@@ -50,11 +50,11 @@ const canvasToString = (canvasData) => {
 /* convert binary string to base 10 string */
 const stringToNumber = (str) => {
   let num = '';
-  if (str.length%4 != 0) {
-    str = strFill(4-str.length%4, '0') + str;
+  if (str.length%3 != 0) {
+    str = strFill(3-str.length%3, '0') + str;
   }
-  for (let i = 0; i < str.length; i += 4) {
-    let s1 = str.substring(i, i+4);
+  for (let i = 0; i < str.length; i += 3) {
+    let s1 = str.substring(i, i+3);
     if (s1 == '1110') {
       num += '8';
     } else if (s1 == '1111') {
@@ -77,7 +77,7 @@ const numberToString = (num) => {
       str += '1111';
     } else {
       s1 = s1.toString(2);
-      str += strFill(4-s1.length, '0') + s1;
+      str += strFill(3-s1.length, '0') + s1;
     }
   }
   return str;

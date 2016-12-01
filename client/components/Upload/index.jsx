@@ -5,6 +5,8 @@
 import React from 'react'
 import {browserHistory} from 'react-router'
 
+import {numberToString, stringToCanvas} from '~/libs/transformations'
+
 let bOw = (color) => {
   return color >= 128 ? 255 : 0
 }
@@ -36,28 +38,50 @@ const Upload = (props) => {
     let reader = new FileReader();
     let file = e.target.files[0];
     //event listener for when file is downloaded
-    reader.onloadend = () => {
-      state.file = file;
-      state.imagePreviewUrl = reader.result;
-      //When the image is loaded it will be placed on the canvas
-      var image = new Image();
-      image.onload = function() {
-        //need to resize canvas to minimum dimensions
+    if (file.type == "text/plain") {
+      reader.onloadend = () => {
+        state.file = file;
+
         var canvas = document.createElement('canvas');
         let ctx = canvas.getContext("2d");
-        canvas.width = image.width;
-        canvas.height = image.height;
-        ctx.drawImage(image, 0, 0);
-        let canvasData = ctx.getImageData(0,0,image.width, image.height);
 
-        convertToBlackOrWhite(canvasData.data)
+        let str = numberToString(reader.result);
+
+        console.log(reader.result, str);
+
+        canvas.width = Math.floor(Math.sqrt(str.length));
+        canvas.height = Math.ceil(Math.sqrt(str.length));
+
+        let canvasData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+
+        stringToCanvas(str, canvasData.data);
         props.setImageData(canvasData);
         browserHistory.push('/generate');
-      };
-      image.src = state.imagePreviewUrl;
-    }
+      }
+      reader.readAsText(file);
+    } else {
+      reader.onloadend = () => {
+        state.file = file;
+        state.imagePreviewUrl = reader.result;
+        //When the image is loaded it will be placed on the canvas
+        var image = new Image();
+        image.onload = function() {
+          //need to resize canvas to minimum dimensions
+          var canvas = document.createElement('canvas');
+          let ctx = canvas.getContext("2d");
+          canvas.width = image.width;
+          canvas.height = image.height;
+          ctx.drawImage(image, 0, 0);
+          let canvasData = ctx.getImageData(0,0,image.width, image.height);
 
-    reader.readAsDataURL(file);
+          convertToBlackOrWhite(canvasData.data)
+          props.setImageData(canvasData);
+          browserHistory.push('/generate');
+        };
+        image.src = state.imagePreviewUrl;
+      }
+      reader.readAsDataURL(file);
+    }
   }
 
   return (
