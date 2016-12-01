@@ -8,8 +8,30 @@
   display: inline;
   bottom: 0;
   width: 100%;
+  padding: 10px;
 }
 
 .bottom-bar label{
   color: #aff000;
+  font-size: 20px;
+}
+
+#incrementTitle {
+  float: left;
+  padding-right: 10px;
+}
+
+#incrementTools {
+  float: left;
+  width: 80%;
+  text-align: center;
+}
+
+#incrementSlider {
+  float: left;
+  width: 95%;
+}
+
+#incrementValue {
+  float: left;
 }
