@@ -46,11 +46,8 @@ const Upload = (props) => {
         let ctx = canvas.getContext("2d");
 
         let str = numberToString(reader.result);
-
-        console.log(reader.result, str);
-
         canvas.width = Math.floor(Math.sqrt(str.length));
-        canvas.height = Math.ceil(Math.sqrt(str.length));
+        canvas.height = Math.floor(Math.sqrt(str.length));
 
         let canvasData = ctx.getImageData(0, 0, canvas.width, canvas.height);
 
