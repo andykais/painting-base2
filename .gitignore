@@ -45,5 +45,5 @@ babel_cache
 *.tgz
 
 # Compiled js files
-dist
-
+#dist
+dist/server
