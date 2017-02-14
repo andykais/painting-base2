@@ -100,7 +100,7 @@ function getOutput(setPath) {
   }
   if (isProd && setPath.includes('client')) {
     output.filename = 'app.[chunkhash].js'
-    output.publicPath = '/'
+    output.publicPath = '/painting-base2/'
   }
   return output
 }
