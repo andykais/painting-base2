@@ -3,9 +3,11 @@ import 'babel-polyfill' // imports missing libs like System.import
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux' // propogates the store throughout application
-import { applyRouterMiddleware, Router, browserHistory } from 'react-router'
+import { applyRouterMiddleware, Router } from 'react-router'
 import { syncHistoryWithStore } from 'react-router-redux'
-import useScroll from 'react-router-scroll'
+import createHistory from 'history/lib/createBrowserHistory'
+//var createHistory = require('history').createBrowserHistory
+//import useScroll from 'react-router-scroll'
 import configureStore from './store' //import state manager
 import './index.scss' // import styles
 
@@ -13,6 +15,10 @@ import './index.scss' // import styles
 // this uses the singleton browserHistory provided by react-router
 // Optionally, this could be changed to leverage a created history
 // e.g. `const browserHistory = useRouterHistory(createBrowserHistory)()`
+const browserHistory = createHistory({
+  basename: process.ENV.publicPath
+})
+
 const initialState = {}
 const store = configureStore(initialState, browserHistory)
 
@@ -56,4 +62,5 @@ createRootComponent(store, function() {
 
 })
 
+console.log('hello?')
 

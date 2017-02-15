@@ -3,7 +3,6 @@
  */
 
 
-'use strict'
 const path = require('path')
 
 const clientPath  = 'client'
@@ -12,6 +11,7 @@ const serverPath  = 'server'
 var paths = {
   client: {
     entry: `${clientPath}/index.jsx`,
+    publicPath: 'painting-base2',
     template: `${clientPath}/index.html`,
     assets: `${clientPath}/assets/**/*`,
     images: `${clientPath}/assets/images/**/*`,

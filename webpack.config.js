@@ -12,6 +12,7 @@ const webpack = require('webpack')
   , ExtractTextPlugin = require('extract-text-webpack-plugin')
   , LiveReloadPlugin = require('webpack-livereload-plugin')
   , isProd = (process.env.NODE_ENV == 'production') // tells functions which plugins to choose based on production or development
+  , publicPath = isProd ? conf.client.publicPath : '/'
 
 // babel converts es6 javascript into es2015
 var commonLoaders = [
@@ -56,7 +57,12 @@ function getClientPlugins() {
       template: conf.client.template,
       filename: 'index.html',
       inject: 'body'
-    })
+    }),
+    new webpack.DefinePlugin({
+      'process.ENV': {
+        publicPath: JSON.stringify(publicPath)
+      }
+    }),
   ].concat(plugins)
 
   if (isProd) {
@@ -67,6 +73,7 @@ function getClientPlugins() {
       new CleanWebpackPlugin([conf.distClient]),
     ].concat(plugins)
   } else {
+    //process.ENV['publicPath'] = '/'
     plugins = [
       new ExtractTextPlugin('app.css'),
       new webpack.HotModuleReplacementPlugin()

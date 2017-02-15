@@ -60,3 +60,7 @@ webpack(configServer).watch({
   }
 })
 
+process.once('SIGINT', function(){
+  console.log()
+  process.exit(0)
+})
